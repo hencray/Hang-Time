@@ -23,7 +23,7 @@ class UserGroupRepository:
                     INSERT INTO usergroups (user_id, group_id)
                     VALUES (%s, %s);
                     """,
-                    [user_group.user_id, user_group.group_id]
+                    [user_group.user_id, user_group.group_id],
                 )
 
     def get_user_groups(self, user_id: int) -> List[UserGroupOut]:
@@ -36,15 +36,15 @@ class UserGroupRepository:
                     JOIN usergroups ug ON ug.group_id = g.id
                     WHERE ug.user_id = %s;
                     """,
-                    [user_id]
+                    [user_id],
                 )
                 rows = db.fetchall()
                 result = []
                 for row in rows:
                     group_data = {
-                        'group_id': row[0],
-                        'name': row[1],
-                        'description': row[2]
+                        "group_id": row[0],
+                        "name": row[1],
+                        "description": row[2],
                     }
                     result.append(UserGroupOut(**group_data))
                 return result
@@ -57,5 +57,5 @@ class UserGroupRepository:
                     DELETE FROM usergroups
                     WHERE user_id = %s AND group_id = %s;
                     """,
-                    [user_id, group_id]
+                    [user_id, group_id],
                 )
