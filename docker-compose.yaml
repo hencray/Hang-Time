@@ -1,4 +1,6 @@
 volumes:
+  jwtdown-db-data:
+    external: true
   postgres-data:
     external: true
 services:
@@ -14,6 +16,7 @@ services:
       - 15432:5432
   fastapi:
     environment:
+      SIGNING_KEY: ${SIGNING_KEY}
       DATABASE_URL: postgresql://example_user:secret@postgres/example_db
       CORS_HOST: http://localhost:3000
     build:
