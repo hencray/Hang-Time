@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import os
-from routers import users, groups
+from routers import users, groups, usergroups
 
 app = FastAPI()
 
@@ -29,3 +29,4 @@ def launch_details():
 
 app.include_router(users.router)
 app.include_router(groups.router)
+app.include_router(usergroups.router)

@@ -6,4 +6,5 @@ router = APIRouter()
 
 @router.post("/users")
 def create_user(user: UsersIn, repo: UsersRepository = Depends()):
-    return repo.create(user)
+    created_user = repo.create(user)
+    return created_user

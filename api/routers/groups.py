@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Depends
 from queries.groups import GroupsIn, GroupsRepository
 
+
 router = APIRouter()
 
 
