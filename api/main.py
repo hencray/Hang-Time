@@ -1,9 +1,12 @@
 from fastapi import FastAPI
+from authenticator import authenticator
 from fastapi.middleware.cors import CORSMiddleware
 import os
 from routers import users
 
 app = FastAPI()
+app.include_router(authenticator.router)
+app.include_router(users.router)
 
 app.add_middleware(
     CORSMiddleware,
@@ -25,6 +28,3 @@ def launch_details():
             "min": "00",
         }
     }
-
-
-app.include_router(users.router)
