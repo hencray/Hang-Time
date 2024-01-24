@@ -73,4 +73,3 @@ async def create_user(
     form = UsersForm(username=info.email, password=info.password)
     token = await authenticator.login(response, request, form, repo)
     return UsersToken(user=user, **token.dict())
-
