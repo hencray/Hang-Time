@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from queries.accounts import pool
+from queries.pool import pool
 
 
 class GroupsIn(BaseModel):

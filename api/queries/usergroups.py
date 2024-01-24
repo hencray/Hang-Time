@@ -1,6 +1,6 @@
 from typing import List
 from pydantic import BaseModel
-from queries.accounts import pool
+from queries.pool import pool
 
 
 class UserGroupIn(BaseModel):
