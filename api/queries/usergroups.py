@@ -14,17 +14,34 @@ class UserGroupOut(BaseModel):
     description: str
 
 
+class UserAlreadyError(Exception):
+    pass
+
+
 class UserGroupRepository:
     def add_user_to_group(self, user_group: UserGroupIn):
         with pool.connection() as conn:
             with conn.cursor() as db:
                 db.execute(
                     """
-                    INSERT INTO usergroups (user_id, group_id)
-                    VALUES (%s, %s);
+                    SELECT COUNT(*)
+                    FROM usergroups
+                    WHERE user_id = %s AND group_id = %s;
                     """,
                     [user_group.user_id, user_group.group_id],
                 )
+                count = db.fetchone()[0]
+
+                if count == 0:
+                    db.execute(
+                        """
+                        INSERT INTO usergroups (user_id, group_id)
+                        VALUES (%s, %s);
+                        """,
+                        [user_group.user_id, user_group.group_id],
+                    )
+                else:
+                    raise UserAlreadyError("User already exists in group")
 
     def get_user_groups(self, user_id: int) -> List[UserGroupOut]:
         with pool.connection() as conn:
@@ -49,7 +66,7 @@ class UserGroupRepository:
                     result.append(UserGroupOut(**group_data))
                 return result
 
-    def remove_user_from_group(self, user_id: int, group_id: int):
+    def remove_user_from_group(self, user_id: int, group_id: int) -> bool:
         with pool.connection() as conn:
             with conn.cursor() as db:
                 db.execute(
@@ -59,3 +76,4 @@ class UserGroupRepository:
                     """,
                     [user_id, group_id],
                 )
+                return True
