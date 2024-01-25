@@ -68,7 +68,7 @@ class UsersQueries:
 
                 if existing_user:
                     raise DuplicateUserError(
-                        "An user with this email already exists."
+                        "A user with this email already exists."
                     )
 
                 result = db.execute(
