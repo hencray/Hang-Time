@@ -60,16 +60,16 @@ def get_one(
     return rep.get_one(event_id)
 
 
-# @router.get(
-#     "/users/{user_id}/events", response_model=Union[List[EventsOut], Error]
-# )
-# def get_user_events(
-#     user_id: int,
-#     rep: EventsRepository = Depends(),
-#     account_data=Depends(authenticator.try_get_current_account_data),
-# ):
-#     if not account_data:
-#         raise HTTPException(
-#             status_code=401, detail="Invalid authentication credentials"
-#         )
-#     return rep.user_groups_events(user_id)
+@router.get(
+    "/users/{user_id}/events", response_model=Union[List[EventsOut], Error]
+)
+def get_user_events(
+    user_id: int,
+    rep: EventsRepository = Depends(),
+    account_data=Depends(authenticator.try_get_current_account_data),
+):
+    if not account_data:
+        raise HTTPException(
+            status_code=401, detail="Invalid authentication credentials"
+        )
+    return rep.user_groups_events(user_id)
