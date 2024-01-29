@@ -7,7 +7,8 @@ from routers import (
     groups,
     usergroups,
     events,
-    availability
+    availability,
+    eventattendees,
 )
 
 
@@ -18,6 +19,7 @@ app.include_router(usergroups.router)
 app.include_router(groups.router)
 app.include_router(events.router)
 app.include_router(availability.router)
+app.include_router(eventattendees.router)
 
 app.add_middleware(
     CORSMiddleware,
