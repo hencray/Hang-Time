@@ -1,7 +1,10 @@
 import { BrowserRouter } from "react-router-dom";
 import { useEffect, useState } from "react";
-import Construct from "./Construct.js";
 import ErrorNotification from "./ErrorNotification";
+import CreateUserForm from "./CreateAccount.js";
+import LoginForm from "./Login.js";
+import Logout from "./Logout.js";
+import { AuthProvider } from "./Apiauth"; // Import AuthProvider
 import "./App.css";
 
 function App() {
@@ -9,6 +12,11 @@ function App() {
   const [error, setError] = useState(null);
   const domain = /https:\/\/[^/]+/;
   const basename = process.env.PUBLIC_URL.replace(domain, "");
+
+  const handleLogin = (user) => {
+    // Handle login here
+    console.log(user);
+  };
 
   useEffect(() => {
     async function getData() {
@@ -30,12 +38,16 @@ function App() {
   }, []);
 
   return (
-    <BrowserRouter basename={basename}>
-      <div>
-        <ErrorNotification error={error} />
-        <Construct info={launchInfo} />
-      </div>
-    </BrowserRouter>
+    <AuthProvider>
+      <BrowserRouter basename={basename}>
+        <div>
+          <ErrorNotification error={error} />
+          <CreateUserForm />
+          <LoginForm onLogin={handleLogin} />
+          <Logout onLogout={() => console.log("Logged out")} />
+        </div>
+      </BrowserRouter>
+    </AuthProvider>
   );
 }
 
