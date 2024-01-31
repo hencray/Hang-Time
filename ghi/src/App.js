@@ -1,11 +1,19 @@
 import { useEffect, useState } from "react";
-import Construct from "./Construct.js";
 import ErrorNotification from "./ErrorNotification";
+import CreateUserForm from "./CreateAccount.js";
+import LoginForm from "./Login.js";
+import Logout from "./Logout.js";
+import { AuthProvider } from './Apiauth'; // Import AuthProvider
 import "./App.css";
 
 function App() {
   const [launchInfo, setLaunchInfo] = useState([]);
   const [error, setError] = useState(null);
+
+  const handleLogin = (user) => {
+    // Handle login here
+    console.log(user);
+  };
 
   useEffect(() => {
     async function getData() {
@@ -27,10 +35,14 @@ function App() {
   }, []);
 
   return (
-    <div>
-      <ErrorNotification error={error} />
-      <Construct info={launchInfo} />
-    </div>
+    <AuthProvider> {/* Wrap your application with AuthProvider */}
+      <div>
+        <ErrorNotification error={error} />
+        <CreateUserForm />
+        <LoginForm onLogin={handleLogin} />
+        <Logout onLogout={() => console.log("Logged out")} />
+      </div>
+    </AuthProvider>
   );
 }
 
