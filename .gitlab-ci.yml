@@ -24,7 +24,9 @@ api-unit-tests-job:
     - pip install -r requirements.txt
     - python -m pytest
   variables:
-    FOO: "bar"
+    SIGNING_KEY: 'dummy-signing-key'
+    DATABASE_URL: 'postgresql://example_user:secret@postgres/example_db'CI environment
+    CORS_HOST: 'http://localhost:3000'
 
 # # Build API Image:
 build-api-image:
