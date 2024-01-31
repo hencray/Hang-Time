@@ -12,3 +12,10 @@ Journal Entry Week 14 (1/19/2024):
 -[x] Setup our database
 -[x] Created a table with migrations and 1 backend point
 -[x] Started on authentication
+
+Journal Entry Week 14 (1/26/2024):
+-[x] Completed back-end authentication
+-[x] Assigned endpoints to work on
+-[x] Created issue stories
+-[x] Completed majority of back-end endpoints
+-[x] Started on front-end signup and login form
