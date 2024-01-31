@@ -17,3 +17,12 @@ this week we fleshed out all of our api endpoints
 created tables
 made the application simpler, thankfully, per recommendation
 got our databases setup and everything is running and ready to code
+
+
+
+20240126
+this week we got our backend endpooints done
+we integrated authorization
+we paired up and worked on some fastapi syntax
+we got into discussion for front end design
+

@@ -55,13 +55,22 @@ async def get_token(
         }
 
 
-@router.post("/api/users", response_model=UsersToken | HttpError)
+@router.post("/users", response_model=UsersToken | HttpError)
 async def create_user(
     info: UsersIn,
     request: Request,
     response: Response,
+    account_data=Depends(
+        authenticator.try_get_current_account_data
+    ),  # Add this line
     repo: UsersQueries = Depends(),
 ):
+    if account_data:  # Add this block
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Logged in users cannot create new users",
+        )
+
     hashed_password = authenticator.hash_password(info.password)
     try:
         user = repo.create(info, hashed_password)
