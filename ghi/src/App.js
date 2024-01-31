@@ -1,3 +1,4 @@
+import { BrowserRouter } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Construct from "./Construct.js";
 import ErrorNotification from "./ErrorNotification";
@@ -6,6 +7,8 @@ import "./App.css";
 function App() {
   const [launchInfo, setLaunchInfo] = useState([]);
   const [error, setError] = useState(null);
+  const domain = /https:\/\/[^/]+/;
+  const basename = process.env.PUBLIC_URL.replace(domain, "");
 
   useEffect(() => {
     async function getData() {
@@ -27,10 +30,12 @@ function App() {
   }, []);
 
   return (
-    <div>
-      <ErrorNotification error={error} />
-      <Construct info={launchInfo} />
-    </div>
+    <BrowserRouter basename={basename}>
+      <div>
+        <ErrorNotification error={error} />
+        <Construct info={launchInfo} />
+      </div>
+    </BrowserRouter>
   );
 }
 
