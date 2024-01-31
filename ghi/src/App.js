@@ -1,6 +1,6 @@
 import { BrowserRouter } from "react-router-dom";
-import { useEffect, useState } from "react";
-import ErrorNotification from "./ErrorNotification";
+// import { useEffect, useState } from "react";
+// import ErrorNotification from "./ErrorNotification";
 import CreateUserForm from "./CreateAccount.js";
 import LoginForm from "./Login.js";
 import Logout from "./Logout.js";
@@ -41,7 +41,7 @@ function App() {
     <AuthProvider>
       <BrowserRouter basename={basename}>
         <div>
-          <ErrorNotification error={error} />
+          {/* <ErrorNotification error={error} /> */}
           <CreateUserForm />
           <LoginForm onLogin={handleLogin} />
           <Logout onLogout={() => console.log("Logged out")} />
