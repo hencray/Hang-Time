@@ -23,6 +23,8 @@ api-unit-tests-job:
     - cd api
     - pip install -r requirements.txt
     - python -m pytest
+  variables:
+    FOO: "bar"
 
 # # Build API Image:
 build-api-image:
