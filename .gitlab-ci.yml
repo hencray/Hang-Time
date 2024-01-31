@@ -80,3 +80,16 @@ pages:
   artifacts:
     paths:
       - public
+pages:
+  stage: deploy
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+  dependencies:
+    - build-front-end-job
+  needs:
+    - build-front-end-job
+  script:
+    - mv ghi/build/ public
+  artifacts:
+    paths:
+      - public
