@@ -107,8 +107,4 @@ const CreateAccount = ({ onCreateUser }) => {
   );
 };
 
-<<<<<<< HEAD
-export default CreateUserForm;
-=======
 export default CreateAccount;
->>>>>>> 05256f7ee502acd7b14c1026c007d1e0c956f710
