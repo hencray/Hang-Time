@@ -6,13 +6,15 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(null);
 
+  const baseURL = process.env.REACT_APP_API_HOST;
+
   const login = async (email, password) => {
     const formData = new URLSearchParams();
     formData.append("username", email); // 'username' here is actually the email
     formData.append("password", password);
 
     try {
-      const response = await fetch("http://localhost:8000/token", {
+      const response = await fetch(`${baseURL}/token`, {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: formData,
@@ -36,7 +38,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = async () => {
-    const response = await fetch("http://localhost:8000/token", {
+    const response = await fetch(`${baseURL}/token`, {
       method: "DELETE",
       credentials: "include",
     });
