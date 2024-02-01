@@ -21,7 +21,12 @@ export const AuthProvider = ({ children }) => {
       console.log(response);
 
       if (!response.ok) {
-        const errorData = await response.json();
+        let errorData;
+        if (response.headers.get("Content-Type").includes("application/json")) {
+          errorData = await response.json();
+        } else {
+          errorData = await response.text();
+        }
         console.log("Error data:", errorData);
         throw new Error(`HTTP error! status: ${response.status}`);
       }
@@ -29,7 +34,18 @@ export const AuthProvider = ({ children }) => {
       const data = await response.json();
       console.log("Data received:", data);
       setToken(data.access_token);
-      setUser(data.user);
+
+      // Parse the token to get the user data
+      const base64Url = data.access_token.split(".")[1];
+      const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+      const jsonData = JSON.parse(window.atob(base64));
+
+      console.log(jsonData); // Log jsonData to the console
+
+      setUser(jsonData.account);
+
+      // Return the access_token
+      return data.access_token;
     } catch (error) {
       console.error("Error:", error);
     }
