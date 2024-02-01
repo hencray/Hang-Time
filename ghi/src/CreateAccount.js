@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./App.css";
 
-const CreateUserForm = ({ onCreateUser }) => {
+const CreateAccount = ({ onCreateUser }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [firstName, setFirstName] = useState("");
@@ -107,4 +107,4 @@ const CreateUserForm = ({ onCreateUser }) => {
   );
 };
 
-export default CreateUserForm;
+export default CreateAccount;
