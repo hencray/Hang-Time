@@ -8,12 +8,10 @@ const CreateAccount = ({ onCreateUser }) => {
   const [lastName, setLastName] = useState("");
   const [errorMessage, setErrorMessage] = useState(""); // Add a new state variable for the error message
 
-  const baseURL = process.env.REACT_APP_API_HOST;
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(`${baseURL}/users`, {
+      const response = await fetch("http://localhost:8000/users", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -22,7 +20,6 @@ const CreateAccount = ({ onCreateUser }) => {
           first_name: firstName,
           last_name: lastName,
         }),
-        credentials: "include",
       });
 
       if (!response.ok) {

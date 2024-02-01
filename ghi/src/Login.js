@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import { useAuth } from "./Apiauth";
+import { useNavigate } from "react-router-dom";
+import CreateUserForm from "./CreateAccount.js";
 
 const LoginForm = ({ onLogin }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const { login } = useAuth();
+  const navigate = useNavigate();
 
   const handleUsernameChange = (e) => {
     setUsername(e.target.value);
@@ -17,10 +20,16 @@ const LoginForm = ({ onLogin }) => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      await login(username, password);
+      const response = await login(username, password);
       setUsername("");
       setPassword("");
-      onLogin();
+      const data = JSON.parse(
+        window.atob(
+          response.split(".")[1].replace(/-/g, "+").replace(/_/g, "/")
+        )
+      );
+      onLogin(data.account, response);
+      navigate("/availability");
     } catch (error) {
       console.error("Error:", error);
     }
@@ -29,7 +38,7 @@ const LoginForm = ({ onLogin }) => {
   return (
     <div className="form-container login-form">
       <h2 className="form-title">Login</h2>
-      <form className="form">
+      <form className="form" onSubmit={handleLogin}>
         <input
           type="text"
           value={username}
@@ -46,11 +55,13 @@ const LoginForm = ({ onLogin }) => {
           autoComplete="current-password"
           required
         />
-        <button type="button" className="submit-button" onClick={handleLogin}>
+        <button type="submit" className="submit-button">
           Login
         </button>
       </form>
+      <CreateUserForm />
     </div>
   );
 };
+
 export default LoginForm;

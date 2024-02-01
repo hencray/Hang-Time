@@ -1,54 +1,46 @@
-import { BrowserRouter } from "react-router-dom";
-// import { useEffect, useState } from "react";
-// import ErrorNotification from "./ErrorNotification";
-import CreateUserForm from "./CreateAccount.js";
+import React from "react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import LoginForm from "./Login.js";
 import Logout from "./Logout.js";
-import { AuthProvider } from "./Apiauth"; // Import AuthProvider
+import { AuthProvider, useAuth } from "./Apiauth";
+import CreateAvailability from "./CreateAvailability";
 import "./App.css";
 
 function App() {
-  // const [launchInfo, setLaunchInfo] = useState([]);
-  // const [error, setError] = useState(null);
+  const { user, login, logout } = useAuth();
   const domain = /https:\/\/[^/]+/;
   const basename = process.env.PUBLIC_URL.replace(domain, "");
 
-  const handleLogin = (user) => {
-    // Handle login here
-    console.log(user);
+  const handleLogin = (data) => {
+    login(data.user, data.access_token);
   };
 
-  // useEffect(() => {
-  //   async function getData() {
-  //     let url = `${process.env.REACT_APP_API_HOST}/api/launch-details`;
-  //     console.log("fastapi url: ", url);
-  //     let response = await fetch(url);
-  //     console.log("------- hello? -------");
-  //     let data = await response.json();
-
-  //     if (response.ok) {
-  //       console.log("got launch data!");
-  //       setLaunchInfo(data.launch_details);
-  //     } else {
-  //       console.log("drat! something happened");
-  //       setError(data.message);
-  //     }
-  //   }
-  //   getData();
-  // }, []);
+  const handleLogout = async () => {
+    await logout();
+    console.log("Logged out");
+  };
 
   return (
+    <BrowserRouter basename={basename}>
+      <div>
+        <Routes>
+          {user && (
+            <Route path="/availability" element={<CreateAvailability />} />
+          )}
+          <Route path="/login" element={<LoginForm onLogin={handleLogin} />} />
+        </Routes>
+        <Logout onLogout={handleLogout} />
+      </div>
+    </BrowserRouter>
+  );
+}
+
+function Root() {
+  return (
     <AuthProvider>
-      <BrowserRouter basename={basename}>
-        <div>
-          {/* <ErrorNotification error={error} /> */}
-          <CreateUserForm />
-          <LoginForm onLogin={handleLogin} />
-          <Logout onLogout={() => console.log("Logged out")} />
-        </div>
-      </BrowserRouter>
+      <App />
     </AuthProvider>
   );
 }
 
-export default App;
+export default Root;

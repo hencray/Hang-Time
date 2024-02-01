@@ -11,10 +11,8 @@ export const AuthProvider = ({ children }) => {
     formData.append("username", email); // 'username' here is actually the email
     formData.append("password", password);
 
-    const baseURL = process.env.REACT_APP_API_HOST;
-
     try {
-      const response = await fetch(`${baseURL}/users`, {
+      const response = await fetch("http://localhost:8000/token", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: formData,
@@ -23,7 +21,12 @@ export const AuthProvider = ({ children }) => {
       console.log(response);
 
       if (!response.ok) {
-        const errorData = await response.json();
+        let errorData;
+        if (response.headers.get("Content-Type").includes("application/json")) {
+          errorData = await response.json();
+        } else {
+          errorData = await response.text();
+        }
         console.log("Error data:", errorData);
         throw new Error(`HTTP error! status: ${response.status}`);
       }
@@ -31,16 +34,25 @@ export const AuthProvider = ({ children }) => {
       const data = await response.json();
       console.log("Data received:", data);
       setToken(data.access_token);
-      setUser(data.user);
+
+      // Parse the token to get the user data
+      const base64Url = data.access_token.split(".")[1];
+      const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+      const jsonData = JSON.parse(window.atob(base64));
+
+      console.log(jsonData); // Log jsonData to the console
+
+      setUser(jsonData.account);
+
+      // Return the access_token
+      return data.access_token;
     } catch (error) {
       console.error("Error:", error);
     }
   };
 
-  const baseURL = process.env.REACT_APP_API_HOST;
-
   const logout = async () => {
-    const response = await fetch(`${baseURL}/users`, {
+    const response = await fetch("http://localhost:8000/token", {
       method: "DELETE",
       credentials: "include",
     });

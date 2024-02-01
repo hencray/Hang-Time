@@ -12,3 +12,8 @@
   font-size: calc(10px + 2vmin);
   color: white;
 }
+.create-availability-wrapper {
+  position: absolute;
+  right: 0;
+  width: 50%; /* Adjust this value as needed */
+}
