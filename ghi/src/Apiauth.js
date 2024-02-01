@@ -11,8 +11,10 @@ export const AuthProvider = ({ children }) => {
     formData.append("username", email); // 'username' here is actually the email
     formData.append("password", password);
 
+    const baseURL = process.env.REACT_APP_API_HOST;
+
     try {
-      const response = await fetch("http://localhost:8000/token", {
+      const response = await fetch(`${baseURL}/users`, {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: formData,
@@ -35,8 +37,10 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const baseURL = process.env.REACT_APP_API_HOST;
+
   const logout = async () => {
-    const response = await fetch("http://localhost:8000/token", {
+    const response = await fetch(`${baseURL}/users`, {
       method: "DELETE",
       credentials: "include",
     });
