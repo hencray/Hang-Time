@@ -3,21 +3,13 @@ import { useAuth } from "./Apiauth";
 import { useNavigate } from "react-router-dom";
 import CreateUserForm from "./CreateAccount.js";
 
-const LoginForm = ({ onLogin }) => {
-  const [username, setUsername] = useState("");
+const LoginForm = () => {
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { login } = useAuth();
   const navigate = useNavigate();
 
-  const handleUsernameChange = (e) => {
-    setUsername(e.target.value);
-  };
-
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
-  };
-
-  const handleLogin = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     try {
       const response = await login(username, password);
@@ -63,5 +55,6 @@ const LoginForm = ({ onLogin }) => {
     </div>
   );
 };
+
 
 export default LoginForm;

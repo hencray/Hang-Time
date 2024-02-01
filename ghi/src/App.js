@@ -5,6 +5,9 @@ import Logout from "./Logout.js";
 import { AuthProvider, useAuth } from "./Apiauth";
 import CreateAvailability from "./CreateAvailability";
 import "./App.css";
+import LoginForm from "./LoginForm";
+import { Main } from "./Main";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
   const { user, login, logout } = useAuth();
@@ -20,6 +23,7 @@ function App() {
     console.log("Logged out");
   };
 
+  const baseURL = process.env.REACT_APP_API_HOST;
   return (
     <BrowserRouter basename={basename}>
       <div>
