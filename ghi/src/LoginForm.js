@@ -8,7 +8,7 @@ const LoginForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(`username: ${email} password: ${password}`);
+    console.log(`email: ${email} password: ${password}`);
     login(email, password);
     e.target.reset();
   };
@@ -21,7 +21,7 @@ const LoginForm = () => {
           <div className="mb-3">
             <label className="form-label">Email:</label>
             <input
-              name="email"
+              name="username"
               type="text"
               className="form-control"
               onChange={(e) => setEmail(e.target.value)}
