@@ -6,6 +6,7 @@ from fastapi import (
     APIRouter,
     Request,
 )
+from typing import List
 from jwtdown_fastapi.authentication import Token
 from authenticator import authenticator
 
@@ -65,7 +66,7 @@ async def create_user(
     ),  # Add this line
     repo: UsersQueries = Depends(),
 ):
-    if account_data:  # Add this block
+    if account_data:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Logged in users cannot create new users",
@@ -82,3 +83,17 @@ async def create_user(
     form = UsersForm(username=info.email, password=info.password)
     token = await authenticator.login(response, request, form, repo)
     return UsersToken(user=user, **token.dict())
+
+
+@router.get("/users", response_model=List[UsersOut])
+async def get_all_users(
+    user: UsersOut = Depends(authenticator.get_current_account_data),
+    repo: UsersQueries = Depends(),
+):
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="User must be authenticated to view users",
+        )
+
+    return repo.get_all()
