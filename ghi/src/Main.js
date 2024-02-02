@@ -3,6 +3,7 @@ import Out from "./Out";
 import TokenCard from "./TokenCard";
 import UserDataCard from "./UserDataCard";
 import SignupForm from "./SignUpForm";
+import CreateAvailability from "./CreateAvailability";
 
 import useToken from "@galvanize-inc/jwtdown-for-react";
 
@@ -16,6 +17,7 @@ export const Main = () => {
       {!token && <LoginForm />}
       {token && <TokenCard />}
       {token && <UserDataCard />}
+      {token && <CreateAvailability />} {/* Add the new component */}
       {token && <Out />}
     </div>
   );

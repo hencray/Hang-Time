@@ -21,7 +21,7 @@ const SignupForm = () => {
       email: email,
       password: password,
     };
-    register(accountData, `${process.env.REACT_APP_API_HOST}/users`);
+    register(accountData, "localhost:8000/users");
     e.target.reset();
     // navigate("/");
   };

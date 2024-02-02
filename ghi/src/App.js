@@ -2,9 +2,8 @@ import { useEffect, useState } from "react";
 import ErrorNotification from "./ErrorNotification";
 import { AuthProvider } from "@galvanize-inc/jwtdown-for-react";
 import "./App.css";
-import LoginForm from "./LoginForm";
 import { Main } from "./Main";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 
 function App() {
   const [error, setError] = useState(null);
@@ -34,16 +33,13 @@ function App() {
   return (
     <AuthProvider baseUrl={baseURL}>
       <BrowserRouter basename={basename}>
-        {/* <AuthProvider> */}
+        <div>
+          <Main/>
+        </div>
         <div>
           <ErrorNotification error={error} />
           <p> hello</p>
-          <Routes>
-            <Route exact path="/" element={<Main />}></Route>
-            <Route exact path="/login" element={<LoginForm />}></Route>
-          </Routes>
         </div>
-        {/* </AuthProvider> */}
       </BrowserRouter>
     </AuthProvider>
   );
