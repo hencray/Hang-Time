@@ -26,3 +26,11 @@ we integrated authorization
 we paired up and worked on some fastapi syntax
 we got into discussion for front end design
 
+
+
+20240201
+this week we have been dealing with errors
+to the point that i deleted 311,000 files from my computer
+and started from scratch with a git clone
+super frustrating week. i am personally behind because i cannot get my code to work.
+hopefully next week goes better.
