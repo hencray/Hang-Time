@@ -6,6 +6,7 @@ import SignupForm from "./SignUpForm";
 import CreateAvailability from "./CreateAvailability";
 import ListAvailabilities from "./ListAvailabilities";
 import MatchingAvailabilities from "./MatchingAvailabilities";
+import ListUsersGroupsEvents from "./ListUsersGroupsEvents";
 
 import useToken from "@galvanize-inc/jwtdown-for-react";
 import CreateEventForm from "./CreateEventForm";
@@ -21,6 +22,7 @@ export const Main = () => {
       {token && <TokenCard />}
       {token && <UserDataCard />}
       {token && <CreateEventForm />}
+      {token && <ListUsersGroupsEvents />}
       {token && <CreateAvailability />}
       {token && <ListAvailabilities />}
       {token && <MatchingAvailabilities />}
