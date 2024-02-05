@@ -4,8 +4,12 @@ import TokenCard from "./TokenCard";
 import UserDataCard from "./UserDataCard";
 import SignupForm from "./SignUpForm";
 import CreateAvailability from "./CreateAvailability";
+import ListAvailabilities from "./ListAvailabilities";
+import MatchingAvailabilities from "./MatchingAvailabilities";
+import ListUsersGroupsEvents from "./ListUsersGroupsEvents";
 
 import useToken from "@galvanize-inc/jwtdown-for-react";
+import CreateEventForm from "./CreateEventForm";
 
 export const Main = () => {
   const { token } = useToken();
@@ -17,7 +21,11 @@ export const Main = () => {
       {!token && <LoginForm />}
       {token && <TokenCard />}
       {token && <UserDataCard />}
-      {token && <CreateAvailability />} {/* Add the new component */}
+      {token && <CreateEventForm />}
+      {token && <ListUsersGroupsEvents />}
+      {token && <CreateAvailability />}
+      {token && <ListAvailabilities />}
+      {token && <MatchingAvailabilities />}
       {token && <Out />}
     </div>
   );

@@ -1,20 +1,39 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect, useCallback } from "react";
 import useToken from "@galvanize-inc/jwtdown-for-react";
+import getUserId from "./GetUserId";
 
 const CreateAvailability = () => {
   const { token } = useToken();
   const [day, setDay] = useState("");
   const [message, setMessage] = useState("");
-  const navigate = useNavigate();
-
   const baseURL = process.env.REACT_APP_API_HOST;
+  const userId = getUserId(token);
+
+  const deleteOldAvailabilities = useCallback(async () => {
+    const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+    const response = await fetch(`${baseURL}/availability/${userId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const availabilities = await response.json();
+
+    availabilities.forEach(async (availability) => {
+      const availabilityDate = new Date(availability.day);
+      if (availabilityDate < sevenDaysAgo) {
+        await fetch(`${baseURL}/availability/${availability.id}`, {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+      }
+    });
+  }, [baseURL, token, userId]);
 
   useEffect(() => {
-    if (!token) {
-      navigate("/login");
-    }
-  }, [token, navigate]);
+    deleteOldAvailabilities();
+  }, [deleteOldAvailabilities]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -28,7 +47,7 @@ const CreateAvailability = () => {
       body: JSON.stringify({
         day,
         is_match: true,
-        user_id: Number(token.sub), // Assuming the user id is stored in the 'sub' field of the token
+        user_id: Number(userId),
       }),
     });
 

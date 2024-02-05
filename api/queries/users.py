@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 from queries.pool import pool
+from typing import List
 
 
 class DuplicateUserError(ValueError):
@@ -91,3 +92,30 @@ class UsersQueries:
                 return UsersOutWithPassword(
                     id=user_id, hashed_password=hashed_password, **user_data
                 )
+
+    def get_all(self) -> List[UsersOut]:
+        with pool.connection() as conn:
+            with conn.cursor() as db:
+                result = db.execute(
+                    """
+                    SELECT id, first_name, last_name, email
+                    FROM authenticated_users;
+                    """
+                ).fetchall()
+
+                if not result:
+                    raise ValueError("No users found.")
+
+                users = []
+                for row in result:
+                    user_id, first_name, last_name, email = row
+                    users.append(
+                        UsersOut(
+                            id=user_id,
+                            first_name=first_name,
+                            last_name=last_name,
+                            email=email,
+                        )
+                    )
+
+        return users

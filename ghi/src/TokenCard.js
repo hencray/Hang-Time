@@ -3,6 +3,7 @@ import JSONPretty from "react-json-pretty";
 
 const TokenCard = () => {
   const { token } = useToken();
+  console.log(token);
 
   return (
     <div className="card text-bg-dark mb-3">

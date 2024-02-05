@@ -78,3 +78,16 @@ def get_availabilities_by_date(
             availability.dict() for availability in availabilities
         ]
     }
+
+
+@router.delete("/availability/past")
+def delete_past_availabilities(
+    repo: AvailabilityRepository = Depends(),
+    account_data=Depends(authenticator.try_get_current_account_data),
+):
+    if not account_data:
+        raise HTTPException(
+            status_code=401, detail="Invalid authentication credentials"
+        )
+    repo.delete_past_availabilities()
+    return {"detail": "Past availabilities deleted"}

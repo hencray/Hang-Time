@@ -62,6 +62,7 @@ const SignupForm = () => {
               onChange={(e) => {
                 setEmail(e.target.value);
               }}
+              autoComplete="new-email"
             />
           </div>
           <div className="mb-3">
@@ -73,6 +74,7 @@ const SignupForm = () => {
               onChange={(e) => {
                 setPassword(e.target.value);
               }}
+              autoComplete="new-password"
             />
           </div>
           <div>

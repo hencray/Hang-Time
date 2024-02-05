@@ -8,7 +8,7 @@ const LoginForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(`email: ${email} password: ${password}`);
+    // console.log(`email: ${email} password: ${password}`);
     login(email, password);
     e.target.reset();
   };
@@ -25,6 +25,7 @@ const LoginForm = () => {
               type="text"
               className="form-control"
               onChange={(e) => setEmail(e.target.value)}
+              autoComplete="username"
             />
           </div>
           <div className="mb-3">
@@ -34,6 +35,7 @@ const LoginForm = () => {
               type="password"
               className="form-control"
               onChange={(e) => setPassword(e.target.value)}
+              autoComplete="current-password"
             />
           </div>
           <div>
