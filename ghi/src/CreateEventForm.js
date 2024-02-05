@@ -144,6 +144,8 @@ const CreateEventForm = () => {
               value={group_id}
               onChange={(e) => setGroupId(e.target.value)}
             >
+              <option value="">Select a group</option>{" "}
+              {/* Add default option */}
               {groups.map((group) => (
                 <option key={group.group_id} value={group.group_id}>
                   {group.name}
