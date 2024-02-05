@@ -26,8 +26,18 @@ class EventsOut(BaseModel):
     start_date: date
     end_date: date
     group_id: int
-    group_name: str  # New field
-    group_description: str  # New field
+
+
+class EventsWithGroupInfo(BaseModel):
+    id: int
+    name: str
+    description: str
+    location: str
+    start_date: date
+    end_date: date
+    group_id: int
+    group_name: str
+    group_description: str
 
 
 class UserGroupIn(BaseModel):
@@ -158,7 +168,7 @@ class EventsRepository:
                 status_code=500, detail="Error getting events"
             ) from e
 
-    def user_groups_events(self, user_id: int) -> List[EventsOut]:
+    def user_groups_events(self, user_id: int) -> List[EventsWithGroupInfo]:
         with pool.connection() as conn:
             with conn.cursor() as db:
                 db.execute(
@@ -189,7 +199,7 @@ class EventsRepository:
                 events = db.fetchall()
                 results = []
                 for event in events:
-                    result = EventsOut(
+                    result = EventsWithGroupInfo(
                         group_id=event[5],
                         group_name=event[3],
                         group_description=event[4],
