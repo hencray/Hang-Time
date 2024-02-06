@@ -54,7 +54,7 @@ build-front-end-job:
     # You need to substitute in your real values for
     # GROUP_NAME, PROJECT_NAME, & WEBSERVICE_NAME below.
     PUBLIC_URL: https://g14-classified.gitlab.io/hang-time/
-    REACT_APP_API_HOST: https://oct-2023-14-api.mod3projects.com
+    REACT_APP_API_HOST: https://oct-2023-14-pt-g14backend.mod3projects.com
   script:
     - cd ghi
     - npm install
