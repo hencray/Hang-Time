@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 from queries.pool import pool
-from datetime import date
+from datetime import date, datetime
 from fastapi import HTTPException
 from typing import List
 
@@ -135,3 +135,16 @@ class AvailabilityRepository:
                 )
                 count = db.fetchone()[0]
                 return count > 0
+
+    def delete_past_availabilities(self):
+        current_date = datetime.now().date()
+        with pool.connection() as conn:
+            with conn.cursor() as db:
+                db.execute(
+                    """
+                    DELETE FROM availabilities
+                    WHERE day < %s;
+                    """,
+                    (current_date,),
+                )
+                conn.commit()

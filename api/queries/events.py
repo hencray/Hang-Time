@@ -28,6 +28,18 @@ class EventsOut(BaseModel):
     group_id: int
 
 
+class EventsWithGroupInfo(BaseModel):
+    id: int
+    name: str
+    description: str
+    location: str
+    start_date: date
+    end_date: date
+    group_id: int
+    group_name: str
+    group_description: str
+
+
 class UserGroupIn(BaseModel):
     user_id: int
     group_id: int
@@ -156,7 +168,7 @@ class EventsRepository:
                 status_code=500, detail="Error getting events"
             ) from e
 
-    def user_groups_events(self, user_id: int) -> List[EventsOut]:
+    def user_groups_events(self, user_id: int) -> List[EventsWithGroupInfo]:
         with pool.connection() as conn:
             with conn.cursor() as db:
                 db.execute(
@@ -166,7 +178,8 @@ class EventsRepository:
                     au.First_Name,
                     au.Last_Name,
                     g.name AS group_name,
-                    g.id AS group_id,  -- Added group_id
+                    g.description AS group_description,
+                    g.id AS group_id,
                     e.id AS event_id,
                     e.name AS event_name,
                     e.description AS event_description,
@@ -179,23 +192,23 @@ class EventsRepository:
                     JOIN events e ON g.id = e.group_id
                     WHERE au.id = %s
                     ORDER BY e.start_date;
-                """,
+                    """,
                     [user_id],
                 )
 
                 events = db.fetchall()
-                print(events)
                 results = []
                 for event in events:
-                    group_id = int(event[4])
-                    result = EventsOut(
-                        group_id=group_id,
-                        id=event[5],
-                        name=event[6],
-                        description=event[7],
-                        location=event[8],
-                        start_date=event[9],
-                        end_date=event[10],
+                    result = EventsWithGroupInfo(
+                        group_id=event[5],
+                        group_name=event[3],
+                        group_description=event[4],
+                        id=event[6],
+                        name=event[7],
+                        description=event[8],
+                        location=event[9],
+                        start_date=event[10],
+                        end_date=event[11],
                     )
                     results.append(result)
                 return results
