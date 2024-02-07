@@ -6,8 +6,8 @@ import { Main } from "./Main";
 import { ProfilePage } from "./ProfilePage";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { GroupPage } from "./GroupPage";
+import { Events } from "./Events";
 import TitleBar from "./Out";
-
 
 function App() {
   const [error, setError] = useState(null);
@@ -38,6 +38,7 @@ function App() {
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/group" element={<GroupPage />} />
           <Route path="/Out" element={<TitleBar />} />
+          <Route path="/events" element={<Events />} />{" "}
         </Routes>
         <div>
           <ErrorNotification error={error} />

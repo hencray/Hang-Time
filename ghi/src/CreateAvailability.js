@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useCallback } from "react";
 import useToken from "@galvanize-inc/jwtdown-for-react";
 import getUserId from "./GetUserId";
+import ListAvailabilities from "./ListAvailabilities";
+import MatchingAvailabilities from "./MatchingAvailabilities";
 
 const CreateAvailability = () => {
   const { token } = useToken();
@@ -8,6 +10,11 @@ const CreateAvailability = () => {
   const [message, setMessage] = useState("");
   const baseURL = process.env.REACT_APP_API_HOST;
   const userId = getUserId(token);
+  const [refreshList, setRefreshList] = useState(false);
+
+  const handleRefreshList = () => {
+    setRefreshList((prevRefresh) => !prevRefresh);
+  };
 
   const deleteOldAvailabilities = useCallback(async () => {
     const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
@@ -18,7 +25,7 @@ const CreateAvailability = () => {
     });
     const availabilities = await response.json();
 
-    availabilities.forEach(async (availability) => {
+    for (let availability of availabilities) {
       const availabilityDate = new Date(availability.day);
       if (availabilityDate < sevenDaysAgo) {
         await fetch(`${baseURL}/availability/${availability.id}`, {
@@ -28,7 +35,10 @@ const CreateAvailability = () => {
           },
         });
       }
-    });
+    }
+
+
+    handleRefreshList();
   }, [baseURL, token, userId]);
 
   useEffect(() => {
@@ -53,6 +63,9 @@ const CreateAvailability = () => {
 
     if (response.ok) {
       setMessage("Availability created successfully");
+
+      
+      handleRefreshList();
     } else {
       const errorData = await response.json();
       setMessage(`Error creating availability: ${errorData.detail}`);
@@ -75,6 +88,11 @@ const CreateAvailability = () => {
         <button type="submit">Create</button>
       </form>
       {message && <p>{message}</p>}
+      <ListAvailabilities
+        refreshList={refreshList}
+        onRefresh={handleRefreshList}
+      />
+      <MatchingAvailabilities />
     </div>
   );
 };
