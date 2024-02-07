@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import useToken from "@galvanize-inc/jwtdown-for-react";
 import getUserId from "./GetUserId";
 
-const ListAvailabilities = () => {
+const ListAvailabilities = ({ refreshList }) => {
   const { token } = useToken();
   const [availabilities, setAvailabilities] = useState([]);
   const baseURL = process.env.REACT_APP_API_HOST;
@@ -24,10 +24,10 @@ const ListAvailabilities = () => {
     };
 
     fetchAvailabilities();
-  }, [token, baseURL, userId]);
+  }, [token, baseURL, userId, refreshList]);
 
   return (
-    <div>
+    <>
       <h1>Your Availabilities</h1>
       <table>
         <thead>
@@ -43,7 +43,7 @@ const ListAvailabilities = () => {
           ))}
         </tbody>
       </table>
-    </div>
+    </>
   );
 };
 
