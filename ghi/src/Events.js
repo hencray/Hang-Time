@@ -2,6 +2,7 @@ import { Navbar } from "./Navbar";
 import useToken from "@galvanize-inc/jwtdown-for-react";
 import { useNavigate } from "react-router-dom";
 import "./App.css";
+import ListAttendees from "./ListAttendees";
 
 export const Events = () => {
   const { token } = useToken();
@@ -17,7 +18,7 @@ export const Events = () => {
       <Navbar />
       <h1>Event Detail</h1>
       <div className="form-container">
-        {/* Add your event detail components here */}
+        {token && <ListAttendees />}
       </div>
     </div>
   );

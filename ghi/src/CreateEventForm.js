@@ -73,7 +73,7 @@ const CreateEventForm = () => {
       group_id,
     };
 
-    const url = "http://localhost:8000/events";
+    const url = `${process.env.REACT_APP_API_HOST}/events`;
     const fetchOptions = {
       method: "POST",
       headers: {
