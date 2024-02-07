@@ -1,6 +1,12 @@
 from typing import Union, List
 from fastapi import APIRouter, Depends, HTTPException
-from queries.events import EventsIn, EventsOut, EventsRepository, Error
+from queries.events import (
+    EventsIn,
+    EventsOut,
+    EventsRepository,
+    Error,
+    EventsWithGroupInfo,
+)
 from authenticator import authenticator
 
 router = APIRouter()
@@ -61,7 +67,8 @@ def get_one(
 
 
 @router.get(
-    "/users/{user_id}/events", response_model=Union[List[EventsOut], Error]
+    "/users/{user_id}/events",
+    response_model=Union[List[EventsWithGroupInfo], Error],
 )
 def get_user_events(
     user_id: int,
