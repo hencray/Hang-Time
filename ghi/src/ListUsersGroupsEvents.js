@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useAuthContext } from "@galvanize-inc/jwtdown-for-react";
 import getUserId from "./GetUserId";
+import EventAttendance from "./EventAttendance";
 
 function ListUsersGroupsEvents() {
   const { token } = useAuthContext();
@@ -21,7 +22,6 @@ function ListUsersGroupsEvents() {
       if (response.ok) {
         const data = await response.json();
         setUsersgroupsevents(data);
-        console.log(data);
         const uniqueGroups = data.reduce((acc, event) => {
           if (!acc.find((group) => group.id === event.group_id)) {
             acc.push({ id: event.group_id, name: event.group_name });
@@ -34,6 +34,7 @@ function ListUsersGroupsEvents() {
 
     fetchUsersGroupsEvents();
   }, [token, baseURL, userId]);
+
   const filteredEvents = filter
     ? usersgroupsevents.filter((event) => event.group_name === filter)
     : usersgroupsevents;
@@ -58,6 +59,7 @@ function ListUsersGroupsEvents() {
             <th>End Date</th>
             <th>Group Name</th>
             <th>Location</th>
+            <th>Attendance</th>
           </tr>
         </thead>
         <tbody>
@@ -69,6 +71,9 @@ function ListUsersGroupsEvents() {
               <td>{usersgroupsevent.end_date}</td>
               <td>{usersgroupsevent.group_name}</td>
               <td>{usersgroupsevent.location}</td>
+              <td>
+                <EventAttendance eventId={usersgroupsevent.id} />
+              </td>
             </tr>
           ))}
         </tbody>
