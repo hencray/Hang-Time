@@ -21,6 +21,7 @@ function ListUsersGroupsEvents() {
       if (response.ok) {
         const data = await response.json();
         setUsersgroupsevents(data);
+        console.log(data);
         const uniqueGroups = data.reduce((acc, event) => {
           if (!acc.find((group) => group.id === event.group_id)) {
             acc.push({ id: event.group_id, name: event.group_name });
@@ -34,7 +35,7 @@ function ListUsersGroupsEvents() {
     fetchUsersGroupsEvents();
   }, [token, baseURL, userId]);
   const filteredEvents = filter
-    ? usersgroupsevents.filter((event) => event.name === filter)
+    ? usersgroupsevents.filter((event) => event.group_name === filter)
     : usersgroupsevents;
 
   return (
