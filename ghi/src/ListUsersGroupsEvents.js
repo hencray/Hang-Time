@@ -18,10 +18,8 @@ function ListUsersGroupsEvents() {
           Authorization: `Bearer ${token}`,
         },
       });
-
       if (response.ok) {
         const data = await response.json();
-        console.log(data);
         setUsersgroupsevents(data);
         const uniqueGroups = data.reduce((acc, event) => {
           if (!acc.find((group) => group.id === event.group_id)) {
@@ -35,9 +33,8 @@ function ListUsersGroupsEvents() {
 
     fetchUsersGroupsEvents();
   }, [token, baseURL, userId]);
-
   const filteredEvents = filter
-    ? usersgroupsevents.filter((event) => event.group_name === filter)
+    ? usersgroupsevents.filter((event) => event.name === filter)
     : usersgroupsevents;
 
   return (
