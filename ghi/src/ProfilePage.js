@@ -1,11 +1,9 @@
 import { Link, useLocation } from "react-router-dom";
-import LoginForm from "./LoginForm";
-import Out from "./Out";
-import SignupForm from "./SignUpForm";
 import useToken from "@galvanize-inc/jwtdown-for-react";
+import CreateAvailability from "./CreateAvailability";
 import "./App.css";
 
-export const Main = () => {
+export const ProfilePage = () => {
   const { token } = useToken();
   const location = useLocation();
   return (
@@ -29,10 +27,8 @@ export const Main = () => {
           )}
         </nav>
       )}
-      <h1 className="h1-center-top">Welcome To HangTime</h1>
-      {!token && <SignupForm />}
-      {!token && <LoginForm />}
-      {token && <Out />}
+      <h1>Profile Page</h1>
+      <div className="form-container">{token && <CreateAvailability />}</div>
     </div>
   );
 };
