@@ -8,6 +8,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { GroupPage } from "./GroupPage";
 import { Events } from "./Events";
 import TitleBar from "./Out";
+import LoginForm from "./LoginForm";
 
 function App() {
   const [error, setError] = useState(null);
@@ -39,6 +40,7 @@ function App() {
           <Route path="/group" element={<GroupPage />} />
           <Route path="/Out" element={<TitleBar />} />
           <Route path="/events" element={<Events />} />{" "}
+          <Route path="/login" element={<LoginForm />} />
         </Routes>
         <div>
           <ErrorNotification error={error} />
