@@ -134,6 +134,37 @@ class EventsRepository:
                 status_code=500, detail="Error getting event"
             ) from e
 
+    def update(self, event_id: int, event: EventsIn) -> EventsOut:
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    db.execute(
+                        """
+                        UPDATE events
+                        SET name = %s,
+                            description = %s,
+                            location = %s,
+                            start_date = %s,
+                            end_date = %s,
+                            group_id = %s
+                        WHERE id = %s;
+                        """,
+                        [
+                            event.name,
+                            event.description,
+                            event.location,
+                            event.start_date,
+                            event.end_date,
+                            event.group_id,
+                            event_id,
+                        ],
+                    )
+                    return EventsOut(id=event_id, **event.dict())
+        except Exception as e:
+            raise HTTPException(
+                status_code=500, detail="Error updating event"
+            ) from e
+
     def get_all(self) -> List[EventsOut]:
         try:
             with pool.connection() as conn:
