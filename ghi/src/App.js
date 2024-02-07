@@ -8,6 +8,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { GroupPage } from "./GroupPage";
 import { Events } from "./Events";
 import TitleBar from "./Out";
+import EventDetails from "./EventDetails";
 import LoginForm from "./LoginForm";
 
 function App() {
@@ -39,7 +40,8 @@ function App() {
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/group" element={<GroupPage />} />
           <Route path="/Out" element={<TitleBar />} />
-          <Route path="/events" element={<Events />} />{" "}
+          <Route path="/events" element={<Events />} />
+          <Route path="/event/:event_id" element={<EventDetails />} />{" "}
           <Route path="/login" element={<LoginForm />} />
         </Routes>
         <div>
