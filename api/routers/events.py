@@ -1,6 +1,12 @@
 from typing import Union, List
 from fastapi import APIRouter, Depends, HTTPException
-from queries.events import EventsIn, EventsOut, EventsRepository, Error
+from queries.events import (
+    EventsIn,
+    EventsOut,
+    EventsRepository,
+    Error,
+    EventsWithGroupInfo,
+)
 from authenticator import authenticator
 
 router = APIRouter()
@@ -61,7 +67,8 @@ def get_one(
 
 
 @router.get(
-    "/users/{user_id}/events", response_model=Union[List[EventsOut], Error]
+    "/users/{user_id}/events",
+    response_model=Union[List[EventsWithGroupInfo], Error],
 )
 def get_user_events(
     user_id: int,
@@ -73,3 +80,19 @@ def get_user_events(
             status_code=401, detail="Invalid authentication credentials"
         )
     return rep.user_groups_events(user_id)
+
+
+@router.put("/events/{event_id}")
+def update_event(
+    event_id: int,
+    event: EventsIn,
+    events: EventsRepository = Depends(),
+    account_data=Depends(authenticator.try_get_current_account_data),
+):
+    if not account_data:
+        raise HTTPException(
+            status_code=401, detail="Invalid authentication credentials"
+        )
+    if not events.update(event_id, event):
+        raise HTTPException(status_code=404, detail="Event not found")
+    return events.update(event_id, event)

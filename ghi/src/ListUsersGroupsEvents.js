@@ -18,21 +18,22 @@ function ListUsersGroupsEvents() {
           Authorization: `Bearer ${token}`,
         },
       });
-
       if (response.ok) {
         const data = await response.json();
-        console.log(data);
         setUsersgroupsevents(data);
-        const uniqueGroupNames = [
-          ...new Set(data.map((event) => event.group_name)),
-        ];
-        setGroupNames(uniqueGroupNames);
+        console.log(data);
+        const uniqueGroups = data.reduce((acc, event) => {
+          if (!acc.find((group) => group.id === event.group_id)) {
+            acc.push({ id: event.group_id, name: event.group_name });
+          }
+          return acc;
+        }, []);
+        setGroupNames(uniqueGroups);
       }
     };
 
     fetchUsersGroupsEvents();
   }, [token, baseURL, userId]);
-
   const filteredEvents = filter
     ? usersgroupsevents.filter((event) => event.group_name === filter)
     : usersgroupsevents;
@@ -42,9 +43,9 @@ function ListUsersGroupsEvents() {
       <h1>List Users Groups Events</h1>
       <select value={filter} onChange={(e) => setFilter(e.target.value)}>
         <option value="">All</option>
-        {groupNames.map((groupName) => (
-          <option key={groupName} value={groupName}>
-            {groupName}
+        {groupNames.map((group) => (
+          <option key={group.id} value={group.name}>
+            {group.name}
           </option>
         ))}
       </select>

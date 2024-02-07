@@ -10,8 +10,8 @@ const SignupForm = () => {
 
   const { register } = useToken();
 
-  const baseURL = process.env.REACT_APP_API_HOST;
 
+  const baseURL = process.env.REACT_APP_API_HOST
   const handleRegistration = (e) => {
     e.preventDefault();
     const accountData = {

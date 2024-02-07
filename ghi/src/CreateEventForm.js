@@ -34,7 +34,7 @@ const CreateEventForm = () => {
       fetchUserData();
     }
   }, [token]);
-  console.log(user_id);
+
   useEffect(() => {
     const fetchGroups = async () => {
       if (user_id) {
@@ -45,7 +45,6 @@ const CreateEventForm = () => {
         if (response.ok) {
           const data = await response.json();
           setGroups(data);
-          console.log(data);
           console.log("Groups fetched:", data);
         }
       }
@@ -53,6 +52,15 @@ const CreateEventForm = () => {
 
     fetchGroups();
   }, [user_id, token]);
+
+  if (groups.length === 0) {
+    return (
+      <div className="shadow p-4 mt-4">
+        <h1>No Events Created or joined </h1>
+        <p>Please join or create an event.</p>
+      </div>
+    );
+  }
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -65,7 +73,7 @@ const CreateEventForm = () => {
       group_id,
     };
 
-    const url = "http://localhost:8000/events";
+    const url = `${process.env.REACT_APP_API_HOST}/events`;
     const fetchOptions = {
       method: "POST",
       headers: {
