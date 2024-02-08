@@ -24,7 +24,6 @@ class EventAttendeesRepository:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
-                    # Check if the user is already attending the event
                     existing_attendance = db.execute(
                         """
                         SELECT e.id, e.user_id, e.event_id,
@@ -42,7 +41,6 @@ class EventAttendeesRepository:
                             detail="User is already attending the event.",
                         )
 
-                    # Insert the new attendance record
                     result = db.execute(
                         """
                         INSERT INTO eventattendees (user_id, event_id)
@@ -53,7 +51,6 @@ class EventAttendeesRepository:
                     )
                     attendance_id = result.fetchone()[0]
 
-                    # Retrieve user details
                     user_details = db.execute(
                         """
                         SELECT first_name, last_name
@@ -110,7 +107,6 @@ class EventAttendeesRepository:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
-                    # Check if the user is attending the event
                     existing_attendance = db.execute(
                         """
                         SELECT id
@@ -126,7 +122,6 @@ class EventAttendeesRepository:
                             detail="User is not attending the event.",
                         )
 
-                    # Remove the user from the attendees list
                     db.execute(
                         """
                         DELETE FROM eventattendees

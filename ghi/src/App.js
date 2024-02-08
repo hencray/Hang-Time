@@ -10,6 +10,7 @@ import { Events } from "./Events";
 import TitleBar from "./Out";
 import EventDetails from "./EventDetails";
 import LoginForm from "./LoginForm";
+import { Navbar } from "./Navbar";
 
 function App() {
   const [error, setError] = useState(null);
@@ -35,6 +36,7 @@ function App() {
   return (
     <AuthProvider baseUrl={baseURL}>
       <Router basename={basename}>
+        <Navbar />
         <Routes>
           <Route path="/" element={<Main />} />
           <Route path="/profile" element={<ProfilePage />} />
@@ -46,7 +48,6 @@ function App() {
         </Routes>
         <div>
           <ErrorNotification error={error} />
-          <p> hello</p>
         </div>
       </Router>
     </AuthProvider>
