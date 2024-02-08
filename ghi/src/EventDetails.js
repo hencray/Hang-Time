@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useAuthContext } from "@galvanize-inc/jwtdown-for-react";
-import { Navbar } from "./Navbar"; // Import the Navbar component
 
 const EventDetails = () => {
   const { token } = useAuthContext();
@@ -85,69 +84,97 @@ const EventDetails = () => {
 
   return (
     <>
-      <Navbar />
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="id">ID:</label>
-          <input id="id" value={id} onChange={(e) => setId(e.target.value)} />
-        </div>
+      <div className="card shrink-0 w-full max-w-sm shadow-2xl bg-base-100 mx-auto">
+        <form onSubmit={handleSubmit} className="card-body">
+          <div className="form-control">
+            <label htmlFor="id" className="label">
+              <span className="label-text">ID:</span>
+            </label>
+            <input
+              id="id"
+              value={id}
+              onChange={(e) => setId(e.target.value)}
+              className="input input-bordered"
+            />
+          </div>
 
-        <div>
-          <label htmlFor="name">Name:</label>
-          <input
-            id="name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-        </div>
+          <div className="form-control">
+            <label htmlFor="name" className="label">
+              <span className="label-text">Name:</span>
+            </label>
+            <input
+              id="name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="input input-bordered"
+            />
+          </div>
 
-        <div>
-          <label htmlFor="description">Description:</label>
-          <input
-            id="description"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-          />
-        </div>
+          <div className="form-control">
+            <label htmlFor="description" className="label">
+              <span className="label-text">Description:</span>
+            </label>
+            <input
+              id="description"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              className="input input-bordered"
+            />
+          </div>
 
-        <div>
-          <label htmlFor="location">Location:</label>
-          <input
-            id="location"
-            value={location}
-            onChange={(e) => setLocation(e.target.value)}
-          />
-        </div>
+          <div className="form-control">
+            <label htmlFor="location" className="label">
+              <span className="label-text">Location:</span>
+            </label>
+            <input
+              id="location"
+              value={location}
+              onChange={(e) => setLocation(e.target.value)}
+              className="input input-bordered"
+            />
+          </div>
 
-        <div>
-          <label htmlFor="startDate">Start Date:</label>
-          <input
-            id="startDate"
-            value={startDate}
-            onChange={(e) => setStartDate(e.target.value)}
-          />
-        </div>
+          <div className="form-control">
+            <label htmlFor="startDate" className="label">
+              <span className="label-text">Start Date:</span>
+            </label>
+            <input
+              id="startDate"
+              value={startDate}
+              onChange={(e) => setStartDate(e.target.value)}
+              className="input input-bordered"
+            />
+          </div>
 
-        <div>
-          <label htmlFor="endDate">End Date:</label>
-          <input
-            id="endDate"
-            value={endDate}
-            onChange={(e) => setEndDate(e.target.value)}
-          />
-        </div>
+          <div className="form-control">
+            <label htmlFor="endDate" className="label">
+              <span className="label-text">End Date:</span>
+            </label>
+            <input
+              id="endDate"
+              value={endDate}
+              onChange={(e) => setEndDate(e.target.value)}
+              className="input input-bordered"
+            />
+          </div>
 
-        <div>
-          <label htmlFor="eventGroupId">Event Group ID:</label>
-          <input
-            id="eventGroupId"
-            value={eventGroupId}
-            onChange={(e) => setEventGroupId(e.target.value)}
-          />
-        </div>
+          <div className="form-control">
+            <label htmlFor="eventGroupId" className="label">
+              <span className="label-text">Event Group ID:</span>
+            </label>
+            <input
+              id="eventGroupId"
+              value={eventGroupId}
+              onChange={(e) => setEventGroupId(e.target.value)}
+              className="input input-bordered"
+            />
+          </div>
 
-        <button type="submit">Update Event</button>
-      </form>
+          <button type="submit" className="btn btn-primary">
+            Update Event
+          </button>
+        </form>
+      </div>
     </>
   );
 };

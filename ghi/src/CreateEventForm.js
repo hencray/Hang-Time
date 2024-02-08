@@ -86,87 +86,109 @@ const CreateEventForm = () => {
     if (response.ok) {
       const data = await response.json();
       console.log("Event created:", data);
+
+      setName("");
+      setDescription("");
+      setLocation("");
+      setStartDate("");
+      setEndDate("");
+      setGroupId("");
     } else {
       console.error("Error creating event:", response);
     }
   };
 
   return (
-    <div>
-      <h1>Create Event</h1>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>
-            Name:
+    <>
+      <div className="card shrink-0 w-full max-w-sm shadow-2xl bg-base-100 mx-auto">
+        <h1 className="mt-6 text-4xl font-bold leading-10 tracking-tight text-secondary md:text-4xl">
+          Create An Event
+        </h1>
+        <form onSubmit={(e) => handleSubmit(e)} className="card-body">
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text">Name:</span>
+            </label>
             <input
+              name="name"
               type="text"
+              className="input input-bordered"
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
-          </label>
-        </div>
-        <div>
-          <label>
-            Description:
+          </div>
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text">Description:</span>
+            </label>
             <input
+              name="description"
               type="text"
+              className="input input-bordered"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
             />
-          </label>
-        </div>
-        <div>
-          <label>
-            Location:
+          </div>
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text">Location:</span>
+            </label>
             <input
+              name="location"
               type="text"
+              className="input input-bordered"
               value={location}
               onChange={(e) => setLocation(e.target.value)}
             />
-          </label>
-        </div>
-        <div>
-          <label>
-            Start Date:
+          </div>
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text">Start Date:</span>
+            </label>
             <input
+              name="start_date"
               type="date"
+              className="input input-bordered"
               value={start_date}
               onChange={(e) => setStartDate(e.target.value)}
             />
-          </label>
-        </div>
-        <div>
-          <label>
-            End Date:
+          </div>
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text">End Date:</span>
+            </label>
             <input
+              name="end_date"
               type="date"
+              className="input input-bordered"
               value={end_date}
               onChange={(e) => setEndDate(e.target.value)}
             />
-          </label>
-        </div>
-        <div>
-          <label>
-            Group:
+          </div>
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text">Group:</span>
+            </label>
             <select
+              name="group_id"
+              className="select select-bordered"
               value={group_id}
               onChange={(e) => setGroupId(e.target.value)}
             >
-              <option value="">Select a group</option>{" "}
-              {/* Add default option */}
+              <option value="">Select a group</option>
               {groups.map((group) => (
                 <option key={group.group_id} value={group.group_id}>
                   {group.name}
                 </option>
               ))}
             </select>
-          </label>
-        </div>
-        <div>
-          <input type="submit" value="Submit" />
-        </div>
-      </form>
-    </div>
+          </div>
+          <div className="form-control mt-6">
+            <input className="btn btn-primary" type="submit" value="Submit" />
+          </div>
+        </form>
+      </div>
+    </>
   );
 };
 

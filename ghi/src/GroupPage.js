@@ -17,14 +17,34 @@ export const GroupPage = () => {
   }
 
   return (
-    <div className="App">
-      <div className="form-container">
-        {token && <CreateEventForm />}
-        {token && <ListUsersGroupsEvents />}
-        {token && <MatchingAvailabilities />}
-        {token && <ManageGroups />}
-        {token && <AddFriend />}
+    <>
+      <div style={{ display: "flex", flexWrap: "wrap" }}>
+        {token && (
+          <div style={{ flex: "0 0 33%" }}>
+            <CreateEventForm />
+          </div>
+        )}
+        {token && (
+          <div style={{ flex: "0 0 66%" }}>
+            <ListUsersGroupsEvents />
+          </div>
+        )}
+        {token && (
+          <div style={{ flex: "0 0 50%" }}>
+            <MatchingAvailabilities />
+          </div>
+        )}
+        {token && (
+          <div style={{ flex: "0 0 50%" }}>
+            <ManageGroups />
+          </div>
+        )}
+        {token && (
+          <div style={{ flex: "0 0 50%" }}>
+            <AddFriend />
+          </div>
+        )}
       </div>
-    </div>
+    </>
   );
 };
