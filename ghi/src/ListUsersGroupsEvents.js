@@ -51,38 +51,40 @@ function ListUsersGroupsEvents() {
           </option>
         ))}
       </select>
-      <table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Start Date</th>
-            <th>End Date</th>
-            <th>Group Name</th>
-            <th>Location</th>
-            <th>Attendance</th>
-          </tr>
-        </thead>
-        <tbody>
-          {filteredEvents.map((usersgroupsevent) => (
-            <tr key={usersgroupsevent.id}>
-              <td>
-                <Link to={`/event/${usersgroupsevent.id}`}>
-                  {usersgroupsevent.name}
-                </Link>
-              </td>
-              <td>{usersgroupsevent.description}</td>
-              <td>{usersgroupsevent.start_date}</td>
-              <td>{usersgroupsevent.end_date}</td>
-              <td>{usersgroupsevent.group_name}</td>
-              <td>{usersgroupsevent.location}</td>
-              <td>
-                <EventAttendance eventId={usersgroupsevent.id} />
-              </td>
+      <div className="overflow-x-auto">
+        <table className="table table-zebra">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Description</th>
+              <th>Start Date</th>
+              <th>End Date</th>
+              <th>Group Name</th>
+              <th>Location</th>
+              <th>Attendance</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {filteredEvents.map((usersgroupsevent) => (
+              <tr key={usersgroupsevent.id}>
+                <td>
+                  <Link to={`/event/${usersgroupsevent.id}`}>
+                    {usersgroupsevent.name}
+                  </Link>
+                </td>
+                <td>{usersgroupsevent.description}</td>
+                <td>{usersgroupsevent.start_date}</td>
+                <td>{usersgroupsevent.end_date}</td>
+                <td>{usersgroupsevent.group_name}</td>
+                <td>{usersgroupsevent.location}</td>
+                <td>
+                  <EventAttendance eventId={usersgroupsevent.id} />
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }
