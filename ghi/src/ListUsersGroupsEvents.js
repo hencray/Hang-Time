@@ -35,22 +35,30 @@ function ListUsersGroupsEvents() {
 
     fetchUsersGroupsEvents();
   }, [token, baseURL, userId]);
-
   const filteredEvents = filter
     ? usersgroupsevents.filter((event) => event.group_name === filter)
     : usersgroupsevents;
 
   return (
-    <div>
-      <h1>List Users Groups Events</h1>
-      <select value={filter} onChange={(e) => setFilter(e.target.value)}>
-        <option value="">All</option>
-        {groupNames.map((group) => (
-          <option key={group.id} value={group.name}>
-            {group.name}
-          </option>
-        ))}
-      </select>
+    <div className="rounded-2xl shadow-xl mt-4 mb-8 max-w-[96%]">
+      <div className="flex justify-between items-center">
+        <h1 className="mt-6 text-4xl font-bold leading-10 tracking-tight text-secondary md:text-4xl">
+          Upcoming Events
+        </h1>
+        <select
+          value={filter}
+          onChange={(e) => setFilter(e.target.value)}
+          className="select select-bordered w-full max-w-xs"
+        >
+          <option value="">Filter by Group...</option>
+          {groupNames.map((group) => (
+            <option key={group.id} value={group.name}>
+              {group.name}
+            </option>
+          ))}
+        </select>
+      </div>
+
       <div className="overflow-x-auto">
         <table className="table table-zebra">
           <thead>
@@ -67,10 +75,12 @@ function ListUsersGroupsEvents() {
           <tbody>
             {filteredEvents.map((usersgroupsevent) => (
               <tr key={usersgroupsevent.id}>
-                <td>
-                  <Link to={`/event/${usersgroupsevent.id}`}>
-                    {usersgroupsevent.name}
-                  </Link>
+                <td className="text-center">
+                  <button className="btn btn-info">
+                    <Link to={`/event/${usersgroupsevent.id}`}>
+                      {usersgroupsevent.name}
+                    </Link>
+                  </button>
                 </td>
                 <td>{usersgroupsevent.description}</td>
                 <td>{usersgroupsevent.start_date}</td>
