@@ -11,6 +11,7 @@ import TitleBar from "./Out";
 import EventDetails from "./EventDetails";
 import LoginForm from "./LoginForm";
 import { Navbar } from "./Navbar";
+import SignupForm from "./SignUpForm";
 
 function App() {
   const [error, setError] = useState(null);
@@ -45,6 +46,7 @@ function App() {
           <Route path="/events" element={<Events />} />
           <Route path="/event/:event_id" element={<EventDetails />} />{" "}
           <Route path="/login" element={<LoginForm />} />
+          <Route path="/signup" element={<SignupForm />} />
         </Routes>
         <div>
           <ErrorNotification error={error} />

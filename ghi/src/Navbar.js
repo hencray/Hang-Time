@@ -71,13 +71,16 @@ export const Navbar = () => {
       </div>
       <div className="navbar-end">
         {token ? (
-          <Link to="/" className="text-2xl text-base-100" onClick={logout}>
+          <button
+            className="text-2xl text-base-100 mr-4 btn btn-ghost"
+            onClick={logout}
+          >
             Logout
-          </Link>
+          </button>
         ) : (
-          <Link to="/login" className="text-2xl text-base-100">
-            Login
-          </Link>
+          <button className="text-2xl text-base-100 mr-4">
+            <Link to="/login">Login</Link>
+          </button>
         )}
       </div>
     </nav>

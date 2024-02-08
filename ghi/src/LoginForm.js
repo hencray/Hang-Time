@@ -16,35 +16,36 @@ const LoginForm = () => {
   };
 
   return (
-    <div className="card text-bg-light mb-3">
-      <h5 className="card-header">Login</h5>
-      <div className="card-body">
-        <form onSubmit={(e) => handleSubmit(e)}>
-          <div className="mb-3">
-            <label className="form-label">Email:</label>
-            <input
-              name="username"
-              type="text"
-              className="form-control"
-              onChange={(e) => setEmail(e.target.value)}
-              autoComplete="username"
-            />
-          </div>
-          <div className="mb-3">
-            <label className="form-label">Password:</label>
-            <input
-              name="password"
-              type="password"
-              className="form-control"
-              onChange={(e) => setPassword(e.target.value)}
-              autoComplete="current-password"
-            />
-          </div>
-          <div>
-            <input className="btn btn-primary" type="submit" value="Login" />
-          </div>
-        </form>
-      </div>
+    <div className="card shrink-0 w-full max-w-sm shadow-2xl bg-base-100 mx-auto">
+      <form onSubmit={(e) => handleSubmit(e)} className="card-body">
+        <div className="form-control">
+          <label className="label">
+            <span className="label-text">Email:</span>
+          </label>
+          <input
+            name="username"
+            type="text"
+            className="input input-bordered"
+            onChange={(e) => setEmail(e.target.value)}
+            autoComplete="username"
+          />
+        </div>
+        <div className="form-control">
+          <label className="label">
+            <span className="label-text">Password:</span>
+          </label>
+          <input
+            name="password"
+            type="password"
+            className="input input-bordered"
+            onChange={(e) => setPassword(e.target.value)}
+            autoComplete="current-password"
+          />
+        </div>
+        <div className="form-control mt-6">
+          <input className="btn btn-primary" type="submit" value="Login" />
+        </div>
+      </form>
     </div>
   );
 };
