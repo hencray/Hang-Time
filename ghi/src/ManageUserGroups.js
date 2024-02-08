@@ -109,7 +109,6 @@ function CreateGroupForm({ onRefreshGroups }) {
     };
     const response = await fetch(`${baseURL}/groups`, fetchConfig);
     if (response.ok) {
-      alert("Group created successfully!");
       setName("");
       setDescription("");
       onRefreshGroups();
@@ -158,7 +157,7 @@ function CreateGroupForm({ onRefreshGroups }) {
 
 function ManageGroups() {
   const { token } = useToken();
-  const [, setRefreshFlag] = useState(0);
+  const [refreshKey, setRefreshFlag] = useState(0);
   const refreshGroups = () => {
     setRefreshFlag((prevFlag) => prevFlag + 1);
   };
@@ -167,7 +166,7 @@ function ManageGroups() {
       <div className="offset-3 col-6">
         <UserGroups token={token} refreshFlag={refreshGroups} />
         <AddUser onRefreshGroups={refreshGroups} />
-        <CreateGroupForm onRefreshGroups={refreshGroups} />
+        <CreateGroupForm onRefreshGroups={refreshGroups} key={refreshKey} />
       </div>
     </div>
   );
