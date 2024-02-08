@@ -14,7 +14,6 @@ export const ProfilePage = () => {
 
   return (
     <div>
-      <h1>Profile Page</h1>
       <div className="form-container">{token && <CreateAvailability />}</div>
     </div>
   );

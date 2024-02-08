@@ -72,7 +72,6 @@ const MatchingAvailabilities = () => {
     ]);
 
     if (userGroups.length === 0) {
-
       setNoGroup(true);
       return;
     }
@@ -110,44 +109,57 @@ const MatchingAvailabilities = () => {
   const groupNames = [...new Set(availabilities.flatMap((a) => a.groupNames))];
 
   return (
-    <>
-      <h2>Availability Matches</h2>
+    <div className="flex flex-col items-center space-y-4">
+      <h2 className="text-center text-4xl text-black font-bold">
+        Availability Matches
+      </h2>
       {noGroup ? (
-        <p>You need to join or create a group first.</p>
+        <p className="text-black font-bold">
+          You need to join or create a group first.
+        </p>
       ) : (
         <>
-          <input type="date" value={date} onChange={handleDateChange} />
-          <table>
-            <thead>
-              <tr>
-                <th>Date</th>
-                <th>Name</th>
-                <th>Email</th>
-                {groupNames.map((groupName, index) => (
-                  <th key={index}>{groupName}</th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {availabilities.map((availability, index) => (
-                <tr key={index}>
-                  <td>{availability.day}</td>
-                  <td>{availability.userName}</td>
-                  <td>{availability.userEmail}</td>
+          <input
+            type="date"
+            value={date}
+            onChange={handleDateChange}
+            className="input input-bordered w-full max-w-xs text-black font-bold"
+          />
+          <div className="overflow-x-auto">
+            <table className="table table-zebra border rounded m-auto mt-4">
+              <thead>
+                <tr>
+                  <th className="text-center text-black ">Date</th>
+                  <th className="text-center text-black ">Name</th>
+                  <th className="text-center text-black ">Email</th>
                   {groupNames.map((groupName, index) => (
-                    <td key={index}>
-                      {availability.groupNames.includes(groupName)
-                        ? "Yes"
-                        : "No"}
-                    </td>
+                    <th key={index} className="text-center text-black">
+                      {groupName}
+                    </th>
                   ))}
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {availabilities.map((availability, index) => (
+                  <tr key={index}>
+                    <td className="text-black ">{availability.day}</td>
+                    <td className="text-black ">{availability.userName}</td>
+                    <td className="text-black ">{availability.userEmail}</td>
+                    {groupNames.map((groupName, index) => (
+                      <td key={index} className="text-black ">
+                        {availability.groupNames.includes(groupName)
+                          ? "Yes"
+                          : "No"}
+                      </td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </>
       )}
-    </>
+    </div>
   );
 };
 
