@@ -63,7 +63,6 @@ const CreateAvailability = () => {
     if (response.ok) {
       setMessage("Availability created successfully");
 
-
       handleRefreshList();
     } else {
       const errorData = await response.json();

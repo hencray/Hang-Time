@@ -44,7 +44,10 @@ function EventAttendance({ eventId }) {
         showAlert("You are no longer attending this event.", "alert-danger");
       }
     } catch (error) {
-      console.error(`Error ${isChecked ? "attending" : "leaving"} event:`, error);
+      console.error(
+        `Error ${isChecked ? "attending" : "leaving"} event:`,
+        error
+      );
     }
   };
 
@@ -66,14 +69,14 @@ function EventAttendance({ eventId }) {
 
   return (
     <div className="form-control">
-        <label className="label cursor-pointer">
-            <input
-                type="checkbox"
-                checked={isChecked}
-                onChange={handleCheckboxChange}
-                className="checkbox checkbox-primary"
-            />
-        </label>
+      <label className="label cursor-pointer">
+        <input
+          type="checkbox"
+          checked={isChecked}
+          onChange={handleCheckboxChange}
+          className="checkbox checkbox-primary"
+        />
+      </label>
     </div>
   );
 }

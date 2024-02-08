@@ -35,7 +35,6 @@ function ListUsersGroupsEvents() {
 
     fetchUsersGroupsEvents();
   }, [token, baseURL, userId]);
-
   const filteredEvents = filter
     ? usersgroupsevents.filter((event) => event.group_name === filter)
     : usersgroupsevents;
