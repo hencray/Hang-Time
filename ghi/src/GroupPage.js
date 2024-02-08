@@ -1,4 +1,3 @@
-import { Navbar } from "./Navbar";
 import useToken from "@galvanize-inc/jwtdown-for-react";
 import ListUsersGroupsEvents from "./ListUsersGroupsEvents";
 import CreateEventForm from "./CreateEventForm";
@@ -13,24 +12,39 @@ export const GroupPage = () => {
   const navigate = useNavigate();
 
   if (!token) {
-    // If there's no token, navigate to the login page
     navigate("/login");
     return;
   }
 
   return (
-    <div className="App">
-      <div className="App-header">
-        <Navbar />
-        <h1 className="h1-center-top">Group</h1>
+    <>
+      <div style={{ display: "flex", flexWrap: "wrap" }}>
+        {token && (
+          <div style={{ flex: "0 0 33%" }}>
+            <CreateEventForm />
+          </div>
+        )}
+        {token && (
+          <div style={{ flex: "0 0 66%" }}>
+            <ListUsersGroupsEvents />
+          </div>
+        )}
+        {token && (
+          <div style={{ flex: "0 0 50%" }}>
+            <MatchingAvailabilities />
+          </div>
+        )}
+        {token && (
+          <div style={{ flex: "0 0 50%" }}>
+            <ManageGroups />
+          </div>
+        )}
+        {token && (
+          <div style={{ flex: "0 0 50%" }}>
+            <AddFriend />
+          </div>
+        )}
       </div>
-      <div className="form-container">
-        {token && <CreateEventForm />}
-        {token && <ListUsersGroupsEvents />}
-        {token && <MatchingAvailabilities />}
-        {token && <ManageGroups />}
-        {token && <AddFriend />}
-      </div>
-    </div>
+    </>
   );
 };

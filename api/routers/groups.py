@@ -76,3 +76,21 @@ async def update_group(
         )
 
     return repo.update(id, groups)
+
+
+@router.get("/groups", response_model=List[GroupsOut])
+async def get_user_groups(
+    user_id: int = None,
+    user: UsersOut = Depends(authenticator.get_current_account_data),
+    repo: GroupsRepository = Depends(),
+):
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="User must be authenticated to view groups",
+        )
+
+    if user_id is not None:
+        return repo.get_by_user_id(user_id)
+    else:
+        return repo.get_all()

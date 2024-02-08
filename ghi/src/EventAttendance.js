@@ -1,62 +1,84 @@
 import React, { useState, useEffect } from "react";
+import { useAuthContext } from "@galvanize-inc/jwtdown-for-react";
+import getUserId from "./GetUserId";
 
-const EventAttendance = ({ eventId }) => {
-  const [attending, setAttending] = useState(false);
-  const [loading, setLoading] = useState(true);
+function EventAttendance({ eventId }) {
+  const { token } = useAuthContext();
+  const [isChecked, setIsChecked] = useState(false);
   const baseURL = process.env.REACT_APP_API_HOST;
 
   useEffect(() => {
-    const fetchAttendanceStatus = async () => {
-      try {
-        const response = await fetch(`${baseURL}/event_attendance/${eventId}`);
-        if (response.ok) {
-          const data = await response.json();
-          setAttending(data.attending);
-        } else {
-          console.error("Error fetching attendance status:", response.statusText);
-        }
-      } catch (error) {
-        console.error("Error fetching attendance status:", error.message);
-      } finally {
-        setLoading(false);
-      }
-    };
+    const storedValue = localStorage.getItem(`attendance_${eventId}`);
+    if (storedValue !== null) {
+      setIsChecked(storedValue === "true");
+    }
+  }, [eventId]);
 
-    fetchAttendanceStatus();
-  }, [baseURL, eventId]);
+  const handleCheckboxChange = async (e) => {
+    const isChecked = e.target.checked;
+    setIsChecked(isChecked);
 
-  const handleAttendanceToggle = async () => {
     try {
-      const response = await fetch(`${baseURL}/event_attendance/${eventId}`, {
-        method: "POST",
+      const response = await fetch(`${baseURL}/eventattendees`, {
+        method: isChecked ? "POST" : "DELETE",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ event_id: eventId }),
+        body: JSON.stringify({
+          user_id: getUserId(token),
+          event_id: eventId,
+        }),
       });
-      if (response.ok) {
-        const data = await response.json();
-        setAttending(data.attending);
+      if (!response.ok) {
+        throw new Error(
+          `Failed to ${isChecked ? "attend" : "leave"} the event`
+        );
+      }
+
+      localStorage.setItem(`attendance_${eventId}`, isChecked.toString());
+
+      if (isChecked) {
+        showAlert("You are now attending this event.", "alert-success");
       } else {
-        console.error("Error toggling attendance status:", response.statusText);
+        showAlert("You are no longer attending this event.", "alert-danger");
       }
     } catch (error) {
-      console.error("Error toggling attendance status:", error.message);
+      console.error(
+        `Error ${isChecked ? "attending" : "leaving"} event:`,
+        error
+      );
     }
   };
 
-  if (loading) {
-    return <p>Loading attendance status...</p>;
-  }
+  const showAlert = (message, className) => {
+    const alertDiv = document.createElement("div");
+    alertDiv.className = `alert ${className}`;
+    alertDiv.role = "alert";
+    alertDiv.innerHTML = `
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-current shrink-0 w-6 h-6">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+      </svg>
+      <span>${message}</span>
+    `;
+    document.body.appendChild(alertDiv);
+    setTimeout(() => {
+      alertDiv.remove();
+    }, 2000);
+  };
 
   return (
-    <div>
-      <p>Attending: {attending ? "Yes" : "No"}</p>
-      <button onClick={handleAttendanceToggle}>
-        {attending ? "Leave Event" : "Attend Event"}
-      </button>
+    <div className="form-control">
+      <label className="label cursor-pointer">
+        <input
+          type="checkbox"
+          checked={isChecked}
+          onChange={handleCheckboxChange}
+          className="checkbox checkbox-primary"
+        />
+      </label>
     </div>
   );
-};
+}
 
 export default EventAttendance;
