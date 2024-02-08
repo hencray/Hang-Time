@@ -16,36 +16,44 @@ const LoginForm = () => {
   };
 
   return (
-    <div className="card shrink-0 w-full max-w-sm shadow-2xl bg-base-100 mx-auto">
-      <form onSubmit={(e) => handleSubmit(e)} className="card-body">
-        <div className="form-control">
-          <label className="label">
-            <span className="label-text">Email:</span>
-          </label>
-          <input
-            name="username"
-            type="text"
-            className="input input-bordered"
-            onChange={(e) => setEmail(e.target.value)}
-            autoComplete="username"
-          />
-        </div>
-        <div className="form-control">
-          <label className="label">
-            <span className="label-text">Password:</span>
-          </label>
-          <input
-            name="password"
-            type="password"
-            className="input input-bordered"
-            onChange={(e) => setPassword(e.target.value)}
-            autoComplete="current-password"
-          />
-        </div>
-        <div className="form-control mt-6">
-          <input className="btn btn-primary" type="submit" value="Login" />
-        </div>
-      </form>
+    <div className="card text-bg-light mb-3">
+      <h5 className="card-header text-center text-4xl text-black font-bold">
+        Login
+      </h5>
+      <div className="card-body">
+        <form
+          onSubmit={(e) => handleSubmit(e)}
+          className="flex flex-col items-center"
+        >
+          <div className="mb-3 form-control w-full max-w-xs">
+            <label className="form-label text-black font-bold">Email:</label>
+            <input
+              name="username"
+              type="text"
+              className="input input-bordered w-full max-w-xs text-black font-bold"
+              onChange={(e) => setEmail(e.target.value)}
+              autoComplete="username"
+            />
+          </div>
+          <div className="mb-3 form-control w-full max-w-xs">
+            <label className="form-label text-black font-bold">Password:</label>
+            <input
+              name="password"
+              type="password"
+              className="input input-bordered w-full max-w-xs text-black font-bold"
+              onChange={(e) => setPassword(e.target.value)}
+              autoComplete="current-password"
+            />
+          </div>
+          <div>
+            <input
+              className="btn btn-primary text-black font-bold"
+              type="submit"
+              value="Login"
+            />
+          </div>
+        </form>
+      </div>
     </div>
   );
 };

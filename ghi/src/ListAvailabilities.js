@@ -27,23 +27,39 @@ const ListAvailabilities = ({ refreshList }) => {
   }, [token, baseURL, userId, refreshList]);
 
   return (
-    <>
-      <h1>Your Availabilities</h1>
-      <table>
+    <div className="overflow-x-auto">
+      <h1 className="text-center text-4xl text-black font-bold mb-20">
+        Your Availabilities
+      </h1>
+      <table className="table table-zebra border rounded">
         <thead>
           <tr>
+            <th>Day</th>
             <th>Day</th>
           </tr>
         </thead>
         <tbody>
-          {availabilities.map((availability) => (
-            <tr key={availability.id}>
-              <td>{availability.day}</td>
-            </tr>
-          ))}
+          {availabilities
+            .reduce((resultArray, item, index) => {
+              const chunkIndex = Math.floor(index / 2);
+
+              if (!resultArray[chunkIndex]) {
+                resultArray[chunkIndex] = []; // start a new chunk
+              }
+
+              resultArray[chunkIndex].push(item);
+
+              return resultArray;
+            }, [])
+            .map((availabilityPair) => (
+              <tr key={availabilityPair[0].id}>
+                <td>{availabilityPair[0].day}</td>
+                <td>{availabilityPair[1]?.day}</td>
+              </tr>
+            ))}
         </tbody>
       </table>
-    </>
+    </div>
   );
 };
 
