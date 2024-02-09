@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from "react";
 import useToken from "@galvanize-inc/jwtdown-for-react";
 
+
+function refreshPage() {
+    window.location.reload(false);
+  }
+
 const CreateEventForm = () => {
   const { token } = useToken();
   const [user_id, setUserId] = useState(null);
@@ -88,6 +93,7 @@ const CreateEventForm = () => {
       setStartDate("");
       setEndDate("");
       setGroupId("");
+      refreshPage();
     } else {
       console.error("Error creating event:", response);
     }
