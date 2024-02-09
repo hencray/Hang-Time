@@ -63,42 +63,44 @@ const CreateAvailability = () => {
     if (response.ok) {
       setMessage("Availability created successfully");
 
+      setTimeout(() => {
+        setMessage("");
+      }, 2000);
+
       handleRefreshList();
     } else {
       const errorData = await response.json();
       setMessage(`Error creating availability: ${errorData.detail}`);
+
+      setTimeout(() => {
+        setMessage("");
+      }, 2000);
     }
   };
-
   return (
-    <div className="flex justify-center items-center min-h-screen -mt-15">
+    <div className="flex justify-center items-center min-h-screen">
       <div>
-        <h2 className="text-center text-2xl text-black font-bold">
+        <h2 className="text-center text-2xl font-bold leading-10 tracking-tight text-secondary md:text-2xl">
           Create Availabilities
         </h2>
         <form onSubmit={handleSubmit} className="flex flex-col items-center">
           <label className="form-control w-full max-w-xs">
             <div className="label">
-              <span className="label-text text-black font-bold">Day:</span>
+              <span>Day:</span>
             </div>
             <input
               type="date"
               value={day}
               onChange={(e) => setDay(e.target.value)}
               required
-              className="input input-bordered w-full max-w-xs text-black font-bold"
+              className="input input-bordered w-full max-w-xs"
             />
           </label>
-          <button
-            type="submit"
-            className="btn btn-primary mt-4 text-black font-bold"
-          >
+          <button type="submit" className="btn btn-primary mt-4 font-bold">
             Create
           </button>
         </form>
-        {message && (
-          <p className="text-center text-black font-bold">{message}</p>
-        )}
+        {message && <p className="text-center font-bold">{message}</p>}
         <div className="flex space-x-40">
           <div className="w-1/2 mt-10">
             <ListAvailabilities
@@ -106,7 +108,7 @@ const CreateAvailability = () => {
               onRefresh={handleRefreshList}
             />
           </div>
-          <div className="flex space-x- w-1/2 mt-6 ">
+          <div className="w-1/2 mt-11">
             <MatchingAvailabilities />
           </div>
         </div>

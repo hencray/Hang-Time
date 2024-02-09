@@ -30,7 +30,6 @@ const EventDetails = () => {
         );
         const data = await response.json();
         setEvent(data);
-        console.log(data);
         setId(data.id);
         setName(data.name);
         setDescription(data.description);

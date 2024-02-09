@@ -20,9 +20,7 @@ function App() {
   useEffect(() => {
     async function getData() {
       let url = `${process.env.REACT_APP_API_HOST}/api/launch-details`;
-      console.log("fastapi url: ", url);
       let response = await fetch(url);
-      console.log("------- hello? -------");
       let data = await response.json();
       if (response.ok) {
         console.log("got launch data!");

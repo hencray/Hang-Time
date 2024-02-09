@@ -3,6 +3,7 @@ import SignupForm from "./SignUpForm";
 import useToken from "@galvanize-inc/jwtdown-for-react";
 import "./App.css";
 import Team from "./Team";
+import FAQPage from "./FAQ";
 
 export const Main = () => {
   const { token } = useToken();
@@ -24,8 +25,7 @@ export const Main = () => {
                   Unlimit your limited schedule
                 </h2>
                 <p
-                  className="mt-6 tracking-wide
- sm:mt-5 sm:text-md sm:max-w-xl sm:mx-auto md:mt-5"
+                  className="mt-6 tracking-wide sm:mt-5 sm:text-md sm:max-w-xl sm:mx-auto md:mt-5"
                 >
                   Say goodbye to the conflicts of scheduling and welcome the joy
                   of cherished moments with Hang-Time; unlimit the schedules of
@@ -52,9 +52,9 @@ export const Main = () => {
         </a>
         on Freepik
       </div>
-
       {!token && <SignupForm />}
       {!token && <Team />}
+      {!token && <FAQPage />}
     </div>
   );
 };

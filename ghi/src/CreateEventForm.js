@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from "react";
 import useToken from "@galvanize-inc/jwtdown-for-react";
 
+
+function refreshPage() {
+    window.location.reload(false);
+  }
+
 const CreateEventForm = () => {
   const { token } = useToken();
   const [user_id, setUserId] = useState(null);
@@ -23,7 +28,6 @@ const CreateEventForm = () => {
         if (response.ok) {
           const data = await response.json();
           setUserId(data.user.id);
-          console.log("User data fetched:", data.user.id);
         }
       } catch (error) {
         console.error("Error fetching user data:", error);
@@ -45,7 +49,6 @@ const CreateEventForm = () => {
         if (response.ok) {
           const data = await response.json();
           setGroups(data);
-          console.log("Groups fetched:", data);
         }
       }
     };
@@ -84,15 +87,13 @@ const CreateEventForm = () => {
     };
     const response = await fetch(url, fetchOptions);
     if (response.ok) {
-      const data = await response.json();
-      console.log("Event created:", data);
-
       setName("");
       setDescription("");
       setLocation("");
       setStartDate("");
       setEndDate("");
       setGroupId("");
+      refreshPage();
     } else {
       console.error("Error creating event:", response);
     }
