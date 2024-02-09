@@ -23,7 +23,7 @@ def create_availability(
         )
     if (
         int(account_data["id"]) != availability.user_id
-    ):  # Convert account_data["id"] to int
+    ):
         raise HTTPException(status_code=400, detail="Incorrect user id")
 
     if repo.check_availability_exists(availability.user_id, availability.day):
