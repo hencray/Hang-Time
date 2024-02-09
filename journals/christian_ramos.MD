@@ -18,3 +18,5 @@ This week I created the Multiple endpoints and as a team we finished most of the
 
 I also began working on front end pages creating the create account form on the front end that works with our backend api points to create a user
 
+January 29th - Febuary 2nd
+This week I worked on Front end Authentication i created a Custom Authenticator 
