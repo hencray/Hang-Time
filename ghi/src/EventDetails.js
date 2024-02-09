@@ -43,7 +43,7 @@ const EventDetails = () => {
     };
 
     fetchEventDetails();
-  }, [event_id, token]); // Include 'token' in the dependency array
+  }, [event_id, token]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
