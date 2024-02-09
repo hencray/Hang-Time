@@ -10,9 +10,9 @@
 - John Romua
 
 ## Design
-- <a href="https://gitlab.com/g14-classified/hang-time/-/blob/dev/docs/API.md?ref_type=heads">API Documentation</a>
-- <a href="https://gitlab.com/g14-classified/hang-time/-/blob/dev/docs/DATA-MODEL.md?ref_type=heads">Data Models</a>
-- <a href="https://gitlab.com/g14-classified/hang-time/-/blob/dev/ghi/WireFrame/ghi.md?ref_type=heads">GHI</a>
+- <a href="https://gitlab.com/g14-classified/hang-time/-/blob/dev/docs/API.md">API Documentation</a>
+- <a href="https://gitlab.com/g14-classified/hang-time/-/blob/dev/docs/DATA-MODEL.md">Data Models</a>
+- <a href="https://gitlab.com/g14-classified/hang-time/-/blob/dev/docs/ghi.md">GHI</a>
 
 ## Intended Market
 HangTime is tailored for anyone seeking an organized and efficient way to manage their schedules, join groups and events of interest, and connect with others based on open availability.
