@@ -44,7 +44,10 @@ function EventAttendance({ eventId }) {
         showAlert("You are no longer attending this event.", "alert-danger");
       }
     } catch (error) {
-      console.error(`Error ${isChecked ? "attending" : "leaving"} event:`, error);
+      console.error(
+        `Error ${isChecked ? "attending" : "leaving"} event:`,
+        error
+      );
     }
   };
 
@@ -53,7 +56,7 @@ function EventAttendance({ eventId }) {
     alertDiv.className = `alert ${className}`;
     alertDiv.role = "alert";
     alertDiv.innerHTML = `
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-current shrink-0 w-6 h-6">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="stroke-current shrink-0 w-6 h-6">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
       </svg>
       <span>${message}</span>
@@ -66,14 +69,14 @@ function EventAttendance({ eventId }) {
 
   return (
     <div className="form-control">
-        <label className="label cursor-pointer">
-            <input
-                type="checkbox"
-                checked={isChecked}
-                onChange={handleCheckboxChange}
-                className="checkbox checkbox-primary"
-            />
-        </label>
+      <label className="label cursor-pointer">
+        <input
+          type="checkbox"
+          checked={isChecked}
+          onChange={handleCheckboxChange}
+          className="checkbox checkbox-primary"
+        />
+      </label>
     </div>
   );
 }

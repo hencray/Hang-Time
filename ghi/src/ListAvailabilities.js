@@ -44,7 +44,7 @@ const ListAvailabilities = ({ refreshList }) => {
               const chunkIndex = Math.floor(index / 2);
 
               if (!resultArray[chunkIndex]) {
-                resultArray[chunkIndex] = []; // start a new chunk
+                resultArray[chunkIndex] = [];
               }
 
               resultArray[chunkIndex].push(item);

@@ -40,17 +40,6 @@ class EventsWithGroupInfo(BaseModel):
     group_description: str
 
 
-class UserGroupIn(BaseModel):
-    user_id: int
-    group_id: int
-
-
-class UserGroupOut(BaseModel):
-    group_id: int
-    name: str
-    description: str
-
-
 class EventsRepository:
     def create(self, event: EventsIn) -> EventsOut:
         try:
@@ -200,46 +189,51 @@ class EventsRepository:
             ) from e
 
     def user_groups_events(self, user_id: int) -> List[EventsWithGroupInfo]:
-        with pool.connection() as conn:
-            with conn.cursor() as db:
-                db.execute(
-                    """
-                    SELECT
-                    au.id AS user_id,
-                    au.First_Name,
-                    au.Last_Name,
-                    g.name AS group_name,
-                    g.description AS group_description,
-                    g.id AS group_id,
-                    e.id AS event_id,
-                    e.name AS event_name,
-                    e.description AS event_description,
-                    e.location,
-                    e.start_date,
-                    e.end_date
-                    FROM authenticated_users au
-                    JOIN usergroups ug ON au.id = ug.user_id
-                    JOIN groups g ON ug.group_id = g.id
-                    JOIN events e ON g.id = e.group_id
-                    WHERE au.id = %s
-                    ORDER BY e.start_date;
-                    """,
-                    [user_id],
-                )
-
-                events = db.fetchall()
-                results = []
-                for event in events:
-                    result = EventsWithGroupInfo(
-                        group_id=event[5],
-                        group_name=event[3],
-                        group_description=event[4],
-                        id=event[6],
-                        name=event[7],
-                        description=event[8],
-                        location=event[9],
-                        start_date=event[10],
-                        end_date=event[11],
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    db.execute(
+                        """
+                        SELECT
+                        au.id AS user_id,
+                        au.First_Name,
+                        au.Last_Name,
+                        g.name AS group_name,
+                        g.description AS group_description,
+                        g.id AS group_id,
+                        e.id AS event_id,
+                        e.name AS event_name,
+                        e.description AS event_description,
+                        e.location,
+                        e.start_date,
+                        e.end_date
+                        FROM authenticated_users au
+                        JOIN usergroups ug ON au.id = ug.user_id
+                        JOIN groups g ON ug.group_id = g.id
+                        JOIN events e ON g.id = e.group_id
+                        WHERE au.id = %s
+                        ORDER BY e.start_date;
+                        """,
+                        [user_id],
                     )
-                    results.append(result)
-                return results
+
+                    events = db.fetchall()
+                    results = []
+                    for event in events:
+                        result = EventsWithGroupInfo(
+                            group_id=event[5],
+                            group_name=event[3],
+                            group_description=event[4],
+                            id=event[6],
+                            name=event[7],
+                            description=event[8],
+                            location=event[9],
+                            start_date=event[10],
+                            end_date=event[11],
+                        )
+                        results.append(result)
+                    return results
+        except Exception as e:
+            raise HTTPException(
+                status_code=500, detail="Error getting user groups events"
+            ) from e
