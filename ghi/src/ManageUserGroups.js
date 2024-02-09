@@ -156,7 +156,7 @@ function CreateGroupForm({ onRefreshGroups }) {
           />
           <label htmlFor="description">Description</label>
         </div>
-        <button className="btn btn-primary">Create</button>
+        <button onClick={refreshPage} className="btn btn-primary">Create</button>
       </form>
     </div>
   );
