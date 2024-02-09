@@ -1,7 +1,6 @@
 import useToken from "@galvanize-inc/jwtdown-for-react";
 import ListUsersGroupsEvents from "./ListUsersGroupsEvents";
 import CreateEventForm from "./CreateEventForm";
-import MatchingAvailabilities from "./MatchingAvailabilities";
 import ManageGroups from "./ManageUserGroups";
 import AddFriend from "./AddFriend";
 import { useNavigate } from "react-router-dom";
@@ -27,11 +26,6 @@ export const GroupPage = () => {
         {token && (
           <div style={{ flex: "0 0 66%" }}>
             <ListUsersGroupsEvents />
-          </div>
-        )}
-        {token && (
-          <div style={{ flex: "0 0 50%" }}>
-            <MatchingAvailabilities />
           </div>
         )}
         {token && (
