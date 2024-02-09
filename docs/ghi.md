@@ -4,7 +4,7 @@
 
 This will be the first page visitors arrive at on the website. There will be a link to the navigation bar. The ability to change the page theme to dark mode. There is an intro card introducing the potential user to the site and what it does. The user will be able to sign up to see the logo, a hero card collection of the developers. The link in the navbar renders the login Page.
 
-![Home Page](WireFrame/Homepage.PNG)      ![Home Page](Login.PNG)
+![Home Page](WireFrame/Homepage.PNG)      ![Home Page](WireFrame/Login.PNG)
 
 ## Profile Page
 
