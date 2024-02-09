@@ -2,6 +2,11 @@ import React, { useState, useEffect } from "react";
 import getUserId from "./GetUserId";
 import useToken from "@galvanize-inc/jwtdown-for-react";
 
+
+function refreshPage() {
+    window.location.reload(false);
+  }
+
 function AddUser({ onRefreshGroups, userGroups = [] }) {
   const { token } = useToken();
   const [groups, setGroups] = useState([]);
@@ -45,6 +50,7 @@ function AddUser({ onRefreshGroups, userGroups = [] }) {
 
       if (response.ok) {
         onRefreshGroups();
+        refreshPage();
       } else {
         console.error("Failed to add user to group.");
       }
@@ -54,7 +60,6 @@ function AddUser({ onRefreshGroups, userGroups = [] }) {
     }
   };
 
-  
   const filteredGroups = groups.filter((group) => {
     return !userGroups.some((userGroup) => userGroup.group_id === group.id);
   });

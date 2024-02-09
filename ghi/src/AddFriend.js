@@ -43,15 +43,15 @@ function AddFriend() {
     setFriendEmail(event.target.value);
   };
 
-  const handleAddFriend = () => {
-    const friend = users.find((user) => user.email === friendEmail);
-    if (!friend) {
-      setMessage("No user found with this email!");
-      return;
-    }
+  const handleAddFriend = async () => {
+  const friend = users.find((user) => user.email === friendEmail);
+  if (!friend) {
+    setMessage("No user found with this email!");
+    return;
+  }
 
-
-    fetch(`${baseURL}/usergroups`, {
+  try {
+    const response = await fetch(`${baseURL}/usergroups`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -61,22 +61,18 @@ function AddFriend() {
         user_id: friend.id,
         group_id: selectedGroup,
       }),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          return response.json().then((data) => {
-            throw new Error(data.message);
-          });
-        }
-        return response.json();
-      })
-      .then((data) => {
-        setMessage("Friend successfully added to group!");
-      })
-      .catch((error) => {
-        setMessage(error.message);
-      });
-  };
+    });
+
+    if (!response.ok) {
+      const data = await response.json();
+      throw new Error(data.message);
+    }
+
+    setMessage("Friend successfully added to group!");
+  } catch (error) {
+    setMessage(error.message);
+  }
+};
 
   return (
   <div>
