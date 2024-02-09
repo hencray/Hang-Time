@@ -3,6 +3,7 @@ import SignupForm from "./SignUpForm";
 import useToken from "@galvanize-inc/jwtdown-for-react";
 import "./App.css";
 import Team from "./Team";
+import FAQPage from "./FAQ";
 
 export const Main = () => {
   const { token } = useToken();
@@ -55,6 +56,7 @@ export const Main = () => {
 
       {!token && <SignupForm />}
       {!token && <Team />}
+      {!token && <FAQPage />}
     </div>
   );
 };
