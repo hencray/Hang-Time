@@ -82,7 +82,7 @@ def get_user_events(
     return rep.user_groups_events(user_id)
 
 
-@router.put("/events/{event_id}")
+@router.put("/events/{event_id}", response_model=EventsOut)
 def update_event(
     event_id: int,
     event: EventsIn,
