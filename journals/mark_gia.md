@@ -26,3 +26,12 @@ we integrated authorization
 we paired up and worked on some fastapi syntax
 we got into discussion for front end design
 
+
+
+20240209
+we got everything working, with big help from my teammates my code was turned functional
+I had a wonderful experience with my team, wish I could have contributed more beyond the design phase
+I doubt I would have completed without them.
+overall I think we executed our game plan wonderfully.
+we had a design, we found out the most efficient way to implement it, made some changes and accomplished what we set out to do
+

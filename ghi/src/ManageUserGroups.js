@@ -2,6 +2,12 @@ import React, { useState, useEffect } from "react";
 import useToken from "@galvanize-inc/jwtdown-for-react";
 import getUserId from "./GetUserId";
 import AddUser from "./AddUser";
+import AddFriend from "./AddFriend";
+
+
+function refreshPage() {
+    window.location.reload(false);
+  }
 
 function UserGroups({ token, refreshFlag }) {
   const [usergroups, setGroups] = useState([]);
@@ -34,6 +40,7 @@ function UserGroups({ token, refreshFlag }) {
     });
     if (response.ok) {
       refreshFlag();
+      refreshPage();
     } else {
       console.error("Failed to leave group.");
     }
@@ -87,6 +94,7 @@ function UserGroups({ token, refreshFlag }) {
   );
 }
 
+
 function CreateGroupForm({ onRefreshGroups }) {
   const { token } = useToken();
   const [name, setName] = useState("");
@@ -109,15 +117,13 @@ function CreateGroupForm({ onRefreshGroups }) {
     };
     const response = await fetch(`${baseURL}/groups`, fetchConfig);
     if (response.ok) {
-      alert("Group created successfully!");
       setName("");
       setDescription("");
       onRefreshGroups();
+      refreshPage();
     } else {
       console.error("Failed to create group.");
-      alert(
-        "Failed to create group. Please check the form data and try again."
-      );
+      alert("Failed to create group. Please try again.");
     }
   };
 
@@ -150,24 +156,27 @@ function CreateGroupForm({ onRefreshGroups }) {
           />
           <label htmlFor="description">Description</label>
         </div>
-        <button className="btn btn-primary">Create</button>
+        <button onClick={refreshPage} className="btn btn-primary">Create</button>
       </form>
     </div>
   );
 }
 
+
 function ManageGroups() {
   const { token } = useToken();
   const [, setRefreshFlag] = useState(0);
-  const refreshGroups = () => {
+  const refreshGroups = async () => {
     setRefreshFlag((prevFlag) => prevFlag + 1);
   };
+
   return (
     <div className="row">
       <div className="offset-3 col-6">
         <UserGroups token={token} refreshFlag={refreshGroups} />
         <AddUser onRefreshGroups={refreshGroups} />
         <CreateGroupForm onRefreshGroups={refreshGroups} />
+        <AddFriend onRefreshGroups={refreshGroups} />
       </div>
     </div>
   );
