@@ -2,15 +2,11 @@ import React, { useState, useEffect } from "react";
 import getUserId from "./GetUserId";
 import useToken from "@galvanize-inc/jwtdown-for-react";
 
-
-function refreshPage() {
-    window.location.reload(false);
-  }
-
 function AddUser({ onRefreshGroups, userGroups = [] }) {
   const { token } = useToken();
   const [groups, setGroups] = useState([]);
   const [selectedGroup, setSelectedGroup] = useState(null);
+  const [message, setMessage] = useState("");
   const userId = getUserId(token);
   const baseURL = process.env.REACT_APP_API_HOST;
 
@@ -29,12 +25,15 @@ function AddUser({ onRefreshGroups, userGroups = [] }) {
 
   const handleAddUser = async () => {
     if (!selectedGroup) {
-      alert("Please select a group");
+      setMessage("Please select a group");
+      setTimeout(() => setMessage(""), 2000);
       return;
     }
 
-    if (userGroups.some((group) => group.group_id === selectedGroup)) {
-      alert("You are already in this group");
+    const userGroupsArray = Array.isArray(userGroups) ? userGroups : [];
+    if (userGroupsArray.some((group) => group.group_id === selectedGroup)) {
+      setMessage("You are already in this group");
+      setTimeout(() => setMessage(""), 2000);
       return;
     }
 
@@ -50,23 +49,29 @@ function AddUser({ onRefreshGroups, userGroups = [] }) {
 
       if (response.ok) {
         onRefreshGroups();
-        refreshPage();
       } else {
-        console.error("Failed to add user to group.");
+        setMessage("Failed to add user to group. Please try again later.");
+        setTimeout(() => setMessage(""), 2000);
       }
     } catch (error) {
-      console.error("An error occurred:", error);
-      alert("Failed to add user to group. Please try again later.");
+      setMessage("User is already in this group");
+      setTimeout(() => setMessage(""), 2000);
     }
   };
 
-  const filteredGroups = groups.filter((group) => {
-    return !userGroups.some((userGroup) => userGroup.group_id === group.id);
-  });
+  const filteredGroups = (Array.isArray(groups) ? groups : []).filter(
+    (group) => {
+      const userGroupsArray = Array.isArray(userGroups) ? userGroups : [];
+      return !userGroupsArray.some(
+        (userGroup) => userGroup.group_id === group.id
+      );
+    }
+  );
 
   return (
     <div className="shadow p-4 mt-4">
       <h1>Join a Group</h1>
+      {message && <p className="text-center font-bold">{message}</p>}
       <select onChange={(e) => setSelectedGroup(e.target.value)}>
         <option value="">Select a group</option>
         {filteredGroups.map((group) => (
