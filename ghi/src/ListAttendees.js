@@ -63,16 +63,24 @@ function ListAttendees() {
 
   return (
     <div>
-      <h1>List Attendees</h1>
-      <select value={filter} onChange={(e) => setFilter(e.target.value)}>
-        <option value="">Select an event</option>
-        {eventNames.map((event) => (
-          <option key={event.id} value={event.id}>
-            {event.name}
-          </option>
-        ))}
-      </select>
-      <table>
+      <div className="w-1/2 mx-auto">
+        <h1 className="text-center text-2xl font-bold leading-10 tracking-tight text-secondary md:text-2xl">
+          List Attendees
+        </h1>
+        <select
+          className="w-full"
+          value={filter}
+          onChange={(e) => setFilter(e.target.value)}
+        >
+          <option value="">Select an event</option>
+          {eventNames.map((event) => (
+            <option key={event.id} value={event.id}>
+              {event.name}
+            </option>
+          ))}
+        </select>
+      </div>
+      <table className="w-1/2 mx-auto rounded-lg shadow-lg">
         <thead>
           <tr>
             <th>First Name</th>
