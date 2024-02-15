@@ -18,5 +18,11 @@ This week I created the Multiple endpoints and as a team we finished most of the
 
 I also began working on front end pages creating the create account form on the front end that works with our backend api points to create a user
 
-January 29th - Febuary 2nd
-This week I worked on Front end Authentication i created a Custom Authenticator 
+January 29th - February 2nd
+This week John and i created a custom front end authentication component not using the jwt token, got it to work but was slightly more complicated to implement so we reverted back to the token example from wuthentication playground.
+
+This week I also finished writing and running my own unit test for the availabilities backend, and created the front end components for List Availabilities, Matching availabilities and create availabilities. I also implamented Authentication at my Profilepage. I also added authentication protection to the Availability forms
+
+February 5th - February 9th
+This week i worked on the page layout up untill now we were all rendering our components on one page. I created a Profile page for the availabilities component. Created a groups page to render Group forms. Also developed a Navebar component making navigation possible.
+Helped mark with the groups page by creating the Add a friend to the group component. Also added a bunch of styling from tailwind to the Profile page.

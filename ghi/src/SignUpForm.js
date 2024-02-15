@@ -7,11 +7,8 @@ const SignupForm = () => {
   const [last, setLast] = useState("");
   const [email, setEmail] = useState("");
   const navigate = useNavigate();
-
   const [password, setPassword] = useState("");
-
   const { register } = useToken();
-
   const baseURL = process.env.REACT_APP_API_HOST;
   const handleRegistration = (e) => {
     e.preventDefault();

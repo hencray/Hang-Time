@@ -30,7 +30,6 @@ const EventDetails = () => {
         );
         const data = await response.json();
         setEvent(data);
-        console.log(data);
         setId(data.id);
         setName(data.name);
         setDescription(data.description);
@@ -44,7 +43,7 @@ const EventDetails = () => {
     };
 
     fetchEventDetails();
-  }, [event_id, token]); // Include 'token' in the dependency array
+  }, [event_id, token]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

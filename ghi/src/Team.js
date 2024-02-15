@@ -7,7 +7,7 @@ function Team() {
         <div className="flex flex-wrap">
           <div className="w-full px-4 mb-10 lg:w-1/2 lg:mb-0">
             <div className="mb-10 lg:max-w-lg lg:mb-0">
-              <span className="inline-block px-3 py-1 mb-4 text-xs font-semibold text-blue-600 bg-blue-100 rounded-md dark:bg-gray-700 dark:text-gray-400">
+              <span className="inline-block px-3 py-1 mb-4 text-xs font-semibold text-blue-600 bg-blue-100 rounded-md">
                 Team
               </span>
 

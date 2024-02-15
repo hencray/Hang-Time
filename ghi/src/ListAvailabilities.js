@@ -28,7 +28,7 @@ const ListAvailabilities = ({ refreshList }) => {
 
   return (
     <div className="overflow-x-auto">
-      <h1 className="text-center text-4xl text-black font-bold mb-20">
+      <h1 className="text-center mt-6 text-4xl font-bold leading-10 tracking-tight text-secondary md:text-4xl mb-20">
         Your Availabilities
       </h1>
       <table className="table table-zebra border rounded">
@@ -44,7 +44,7 @@ const ListAvailabilities = ({ refreshList }) => {
               const chunkIndex = Math.floor(index / 2);
 
               if (!resultArray[chunkIndex]) {
-                resultArray[chunkIndex] = []; // start a new chunk
+                resultArray[chunkIndex] = [];
               }
 
               resultArray[chunkIndex].push(item);
