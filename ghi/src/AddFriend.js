@@ -74,17 +74,16 @@ function AddFriend({ userGroups = [], onRefreshGroups }) {
         group_id: selectedGroup,
       }),
     })
-      .then((response) => {
+      .then(async (response) => {
         if (!response.ok) {
-          return response.json().then((data) => {
-            throw new Error(data.message);
-          });
+          const data = await response.json();
+          throw new Error(data.message);
         }
         return response.json();
       })
-      .then((data) => {
+      .then(() => {
         setMessage("Friend successfully added to group!");
-        onRefreshGroups(); 
+        onRefreshGroups();
       })
       .catch((error) => {
         setMessage(error.message);
@@ -92,11 +91,17 @@ function AddFriend({ userGroups = [], onRefreshGroups }) {
   };
 
   return (
-    <div>
-      <h1>Add Friends to Your Groups</h1>
+    <div className="flex flex-col items-center">
+      <h1 className="text-center text-2xl font-bold leading-10 tracking-tight text-secondary md:text-2xl">
+        Add Friends to Your Groups
+      </h1>
       {Array.isArray(groups) && groups.length > 0 ? (
         <>
-          <select value={selectedGroup} onChange={handleGroupChange}>
+          <select
+            className="mb-4"
+            value={selectedGroup}
+            onChange={handleGroupChange}
+          >
             {groups.map((group) => (
               <option key={group.group_id} value={group.group_id}>
                 {group.group_id} - {group.name} - {group.description}
@@ -104,12 +109,13 @@ function AddFriend({ userGroups = [], onRefreshGroups }) {
             ))}
           </select>
           <input
+            className="border-2 border-gray-200 p-2 w-full mb-4"
             type="email"
             value={friendEmail}
             onChange={handleEmailChange}
             placeholder="Friend's email"
           />
-          <button onClick={handleAddFriend}>Add Friend</button>
+          <button className="btn btn-primary" onClick={handleAddFriend}>Add Friend</button>
         </>
       ) : (
         <p>Please join a group first.</p>

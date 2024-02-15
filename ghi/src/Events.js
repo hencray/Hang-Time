@@ -1,6 +1,6 @@
 import useToken from "@galvanize-inc/jwtdown-for-react";
 import { useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import "./App.css";
 import ListAttendees from "./ListAttendees";
 import EventsTable from "./EventHistory";
@@ -10,8 +10,6 @@ import ListUsersGroupsEvents from "./ListUsersGroupsEvents";
 export const Events = () => {
   const { token } = useToken();
   const navigate = useNavigate();
-  const [show, setShow] = useState("");
-
   useEffect(() => {
     if (!token) {
       navigate("/");
@@ -24,35 +22,59 @@ export const Events = () => {
         Events
       </h1>
       <div className="flex justify-center items-center space-x-4 w-full">
-        {token && show === "" && (
-          <button className="btn btn-info" onClick={() => setShow("both")}>
+        {token && (
+          <button
+            className="btn btn-primary"
+            onClick={() =>
+              document.getElementById("createEventModal").showModal()
+            }
+          >
             Create Event
           </button>
         )}
-        {token && show === "both" && (
-          <button className="btn btn-info" onClick={() => setShow("")}>
-            Back
+        {token && (
+          <button
+            className="btn btn-primary"
+            onClick={() =>
+              document.getElementById("eventsTableModal").showModal()
+            }
+          >
+            Show Events
           </button>
         )}
       </div>
       <div className="flex justify-start items-start w-full">
         {token && (
           <div className="w-1/3">
-            {show === "" && (
-              <div className="mt-11">
-                <ListAttendees />
-              </div>
-            )}
-            {show === "both" && <CreateEventForm />}
+            <div className="mt-11">
+              <ListAttendees />
+            </div>
           </div>
         )}
         {token && (
           <div className="w-2/3">
-            {show === "" && <ListUsersGroupsEvents />}
-            {show === "both" && <EventsTable />}
+            <ListUsersGroupsEvents />
           </div>
         )}
       </div>
+      <dialog id="createEventModal" className="p-4 rounded-lg shadow-lg">
+        <CreateEventForm />
+        <button
+          className="bg-red-500 text-white px-4 py-2 rounded mt-4"
+          onClick={() => document.getElementById("createEventModal").close()}
+        >
+          Close
+        </button>
+      </dialog>
+      <dialog id="eventsTableModal" className="p-4 rounded-lg shadow-lg">
+        <EventsTable />
+        <button
+          className="bg-red-500 text-white px-4 py-2 rounded mt-4"
+          onClick={() => document.getElementById("eventsTableModal").close()}
+        >
+          Close
+        </button>
+      </dialog>
     </div>
   );
 };

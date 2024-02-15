@@ -62,10 +62,12 @@ function UserGroups({ token, refreshFlag }) {
   };
 
   return (
-    <div className="shadow p-4 mt-4">
-      <h1>Your Groups</h1>
+    <div className="shadow p-4 mt-4 flex flex-col items-center">
+      <h1 className="text-center text-2xl font-bold leading-10 tracking-tight text-secondary md:text-2xl mb-4">
+        Your Groups
+      </h1>
       {message && <p className="text-center font-bold">{message}</p>}
-      <table>
+      <table className="shadow-md rounded-lg w-full">
         <thead>
           <tr>
             <th>Group ID</th>
@@ -82,7 +84,10 @@ function UserGroups({ token, refreshFlag }) {
                 <td>{group.name}</td>
                 <td>{group.description}</td>
                 <td>
-                  <button onClick={() => handleLeaveAndRefresh(group.group_id)}>
+                  <button
+                    className="btn btn-primary rounded"
+                    onClick={() => handleLeaveAndRefresh(group.group_id)}
+                  >
                     Leave Group
                   </button>
                 </td>
@@ -159,40 +164,52 @@ function CreateGroupForm({ onRefreshGroups }) {
     setTimeout(() => setMessage(""), 2000);
   };
 
-  return (
-    <div className="shadow p-4 mt-4">
-      <h1>Create a Group</h1>
-      {message && <p className="text-center font-bold">{message}</p>}
-      <form onSubmit={handleSubmit} id="create-group-form">
-        <div className="form-floating mb-3">
-          <input
-            onChange={(e) => setName(e.target.value)}
-            placeholder="Name"
-            required
-            type="text"
-            name="name"
-            value={name}
-            id="name"
-            className="form-control"
-          />
-          <label htmlFor="name">Name</label>
-        </div>
-        <div className="form-floating mb-3">
-          <textarea
-            onChange={(e) => setDescription(e.target.value)}
-            placeholder="Description"
-            required
-            name="description"
-            value={description}
-            id="description"
-            className="form-control"
-          />
-          <label htmlFor="description">Description</label>
-        </div>
-        <button className="btn btn-primary">Create</button>
-      </form>
-    </div>
-  );
+ return (
+   <div className="shadow p-4 mt-4 flex flex-col items-center">
+     <h1 className="text-center text-2xl font-bold leading-10 tracking-tight text-secondary md:text-2xl">
+       Create a Group
+     </h1>
+     {message && <p className="text-center font-bold">{message}</p>}
+     <form onSubmit={handleSubmit} id="create-group-form" className="w-full">
+       <div className="form-floating mb-3">
+         <input
+           onChange={(e) => setName(e.target.value)}
+           placeholder="Name"
+           required
+           type="text"
+           name="name"
+           value={name}
+           id="name"
+           className="form-control border-2 border-gray-200 p-2 w-full h-10"
+         />
+         <label
+           htmlFor="name"
+           className="text-center font-bold leading-10 tracking-tight text-secondary"
+         >
+           Name
+         </label>
+       </div>
+       <div className="form-floating mb-3">
+         <textarea
+           onChange={(e) => setDescription(e.target.value)}
+           placeholder="Description"
+           required
+           name="description"
+           value={description}
+           id="description"
+           className="form-control border-2 border-gray-200 p-2 w-full h-36"
+         />
+         <label
+           htmlFor="name"
+           className="text-center font-bold leading-10 tracking-tight text-secondary"
+         >
+           Description
+         </label>
+       </div>
+       <button className="btn btn-primary rounded">Create</button>
+     </form>
+   </div>
+ );
 }
 
 function ManageGroups() {
@@ -228,16 +245,45 @@ function ManageGroups() {
   };
 
   return (
-    <div className="row">
-      <div className="offset-3 col-6">
-        <UserGroups
-          token={token}
-          refreshFlag={refreshGroups}
-          userGroups={userGroups}
-        />
-        <AddUser onRefreshGroups={refreshGroups} userGroups={userGroups} />
-        <AddFriend userGroups={userGroups} onRefreshGroups={refreshGroups} />
-        <CreateGroupForm onRefreshGroups={refreshGroups} />
+    <div className="flex w-full justify-between">
+      <div className="w-1/2">
+        <div className="shadow-lg rounded-lg p-4 mb-4 border border-gray-200">
+          <CreateGroupForm onRefreshGroups={refreshGroups} />
+        </div>
+        <div className="flex">
+          <button
+            className="btn btn-primary ml-auto"
+            onClick={() =>
+              document.getElementById("userGroupsModal").showModal()
+            }
+          >
+            Click for Your Groups
+          </button>
+        </div>
+        <dialog id="userGroupsModal" className="p-4 rounded-lg shadow-lg">
+          <UserGroups
+            token={token}
+            refreshFlag={refreshGroups}
+            userGroups={userGroups}
+          />
+          <button
+            className="bg-red-500 text-white px-4 py-2 rounded mt-4"
+            onClick={() => document.getElementById("userGroupsModal").close()}
+          >
+            Close
+          </button>
+        </dialog>
+      </div>
+      <div className="w-1/2">
+        <div className="shadow-lg rounded-lg p-4 border border-gray-200 space-y-4">
+          <AddUser onRefreshGroups={refreshGroups} userGroups={userGroups} />
+          <div className="ml-4">
+            <AddFriend
+              userGroups={userGroups}
+              onRefreshGroups={refreshGroups}
+            />
+          </div>
+        </div>
       </div>
     </div>
   );

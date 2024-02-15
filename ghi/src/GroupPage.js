@@ -14,9 +14,9 @@ export const GroupPage = () => {
 
   return (
     <>
-      <div style={{ display: "flex", flexWrap: "wrap" }}>
+      <div className="flex justify-center items-center flex-wrap">
         {token && (
-          <div style={{ flex: "0 0 50%" }}>
+          <div className="w-1/2">
             <ManageGroups />
           </div>
         )}

@@ -76,7 +76,7 @@ function ListUsersGroupsEvents() {
             {filteredEvents.map((usersgroupsevent) => (
               <tr key={usersgroupsevent.id}>
                 <td className="text-center">
-                  <button className="btn btn-info">
+                  <button className="btn btn-primary">
                     <Link to={`/event/${usersgroupsevent.id}`}>
                       {usersgroupsevent.name}
                     </Link>

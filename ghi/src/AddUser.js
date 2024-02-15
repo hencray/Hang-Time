@@ -69,10 +69,15 @@ function AddUser({ onRefreshGroups, userGroups = [] }) {
   );
 
   return (
-    <div className="shadow p-4 mt-4">
-      <h1>Join a Group</h1>
+    <div className="shadow p-4 mt-4 flex flex-col items-center">
+      <h1 className="text-center text-2xl font-bold leading-10 tracking-tight text-secondary md:text-2xl">
+        Join a Group
+      </h1>
       {message && <p className="text-center font-bold">{message}</p>}
-      <select onChange={(e) => setSelectedGroup(e.target.value)}>
+      <select
+        className="mb-4"
+        onChange={(e) => setSelectedGroup(e.target.value)}
+      >
         <option value="">Select a group</option>
         {filteredGroups.map((group) => (
           <option key={group.id} value={group.id}>
@@ -80,7 +85,9 @@ function AddUser({ onRefreshGroups, userGroups = [] }) {
           </option>
         ))}
       </select>
-      <button onClick={handleAddUser}>Join Group</button>
+      <button className="btn btn-primary" onClick={handleAddUser}>
+        Join Group
+      </button>
     </div>
   );
 }
