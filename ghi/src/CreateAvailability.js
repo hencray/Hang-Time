@@ -17,28 +17,20 @@ const CreateAvailability = () => {
   };
 
   const deleteOldAvailabilities = useCallback(async () => {
-    const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
-    const response = await fetch(`${baseURL}/availability/${userId}`, {
+    const response = await fetch(`${baseURL}/availability/past`, {
+      method: "DELETE",
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
-    const availabilities = await response.json();
 
-    for (let availability of availabilities) {
-      const availabilityDate = new Date(availability.day);
-      if (availabilityDate < sevenDaysAgo) {
-        await fetch(`${baseURL}/availability/${availability.id}`, {
-          method: "DELETE",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-      }
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.error(`Error deleting past availabilities: ${errorData.detail}`);
     }
 
     handleRefreshList();
-  }, [baseURL, token, userId]);
+  }, [baseURL, token]);
 
   useEffect(() => {
     deleteOldAvailabilities();

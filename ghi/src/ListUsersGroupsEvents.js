@@ -4,7 +4,7 @@ import getUserId from "./GetUserId";
 import { Link } from "react-router-dom";
 import EventAttendance from "./EventAttendance";
 
-function ListUsersGroupsEvents() {
+function ListUsersGroupsEvents({ listEvents, setAttendanceChanged }) {
   const { token } = useAuthContext();
   const [usersgroupsevents, setUsersgroupsevents] = useState([]);
   const [filter, setFilter] = useState("");
@@ -34,7 +34,7 @@ function ListUsersGroupsEvents() {
     };
 
     fetchUsersGroupsEvents();
-  }, [token, baseURL, userId]);
+  }, [token, baseURL, userId, listEvents]);
   const filteredEvents = filter
     ? usersgroupsevents.filter((event) => event.group_name === filter)
     : usersgroupsevents;
@@ -88,7 +88,10 @@ function ListUsersGroupsEvents() {
                 <td>{usersgroupsevent.group_name}</td>
                 <td>{usersgroupsevent.location}</td>
                 <td>
-                  <EventAttendance eventId={usersgroupsevent.id} />
+                  <EventAttendance
+                    eventId={usersgroupsevent.id}
+                    setAttendanceChanged={setAttendanceChanged}
+                  />
                 </td>
               </tr>
             ))}

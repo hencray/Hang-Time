@@ -8,9 +8,11 @@ const EventsTable = ({ refreshList }) => {
   const [userGroups, setUserGroups] = useState([]);
   const [loading, setLoading] = useState(true);
   const baseURL = process.env.REACT_APP_API_HOST;
-  const userId = getUserId(token);
+  const userId = token ? getUserId(token) : null;
 
   useEffect(() => {
+    if (!token || !userId) return;
+
     const getUserGroups = async () => {
       const response = await fetch(`${baseURL}/groups?user_id=${userId}`, {
         headers: {
@@ -30,36 +32,40 @@ const EventsTable = ({ refreshList }) => {
   }, [token, baseURL, userId]);
 
   useEffect(() => {
-    if (!loading) {
-      const fetchEvents = async () => {
-        const response = await fetch(`${baseURL}/events`, {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
+    if (!token || !userId || loading) return;
+
+    const fetchEvents = async () => {
+      const response = await fetch(`${baseURL}/events`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (response.ok) {
+        let data = await response.json();
+        const userGroupIds = userGroups.map((group) => group.id);
+        const currentDate = new Date();
+
+        data = data.filter((event) => {
+          const eventEndDate = new Date(event.end_date);
+
+          return (
+            userGroupIds.includes(event.group_id) &&
+            eventEndDate < currentDate
+          );
         });
 
-        if (response.ok) {
-          let data = await response.json();
-          const userGroupIds = userGroups.map((group) => group.id);
-          const currentDate = new Date();
+        setEvents(data);
+      }
+    };
 
-          data = data.filter((event) => {
-            const eventEndDate = new Date(event.end_date);
+    fetchEvents();
+  }, [token, baseURL, refreshList, userGroups, loading, userId]);
 
-            return (
-              userGroupIds.includes(event.group_id) &&
-              eventEndDate < currentDate
-            );
-          });
-
-          setEvents(data);
-        }
-      };
-
-      fetchEvents();
-    }
-  }, [token, baseURL, refreshList, userGroups, loading]);
+  if (!token) {
+    return null;
+  }
 
   return (
     <>

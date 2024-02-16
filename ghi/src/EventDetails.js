@@ -72,7 +72,7 @@ const EventDetails = () => {
       );
 
       if (response.ok) {
-        navigate("/Group");
+        navigate("/Events");
       }
     } catch (error) {
       console.error(error);

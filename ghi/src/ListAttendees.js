@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import { useAuthContext } from "@galvanize-inc/jwtdown-for-react";
 import getUserId from "./GetUserId";
 
-function ListAttendees() {
+function ListAttendees({ attendanceChanged }) {
   const { token } = useAuthContext();
   const [attendees, setAttendees] = useState([]);
   const [filter, setFilter] = useState("");
@@ -59,7 +59,7 @@ function ListAttendees() {
     if (filter) {
       fetchAttendeesForEvent(filter);
     }
-  }, [fetchAttendeesForEvent, filter]);
+  }, [fetchAttendeesForEvent, filter, attendanceChanged]);
 
   return (
     <div>

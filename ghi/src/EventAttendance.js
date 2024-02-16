@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useAuthContext } from "@galvanize-inc/jwtdown-for-react";
 import getUserId from "./GetUserId";
 
-function EventAttendance({ eventId }) {
+function EventAttendance({ eventId, setAttendanceChanged }) {
   const { token } = useAuthContext();
   const [isChecked, setIsChecked] = useState(false);
   const baseURL = process.env.REACT_APP_API_HOST;
@@ -15,12 +15,11 @@ function EventAttendance({ eventId }) {
   }, [eventId]);
 
   const handleCheckboxChange = async (e) => {
-    const isChecked = e.target.checked;
-    setIsChecked(isChecked);
+    const targetChecked = e.target.checked;
 
     try {
       const response = await fetch(`${baseURL}/eventattendees`, {
-        method: isChecked ? "POST" : "DELETE",
+        method: targetChecked ? "POST" : "DELETE",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
@@ -32,20 +31,22 @@ function EventAttendance({ eventId }) {
       });
       if (!response.ok) {
         throw new Error(
-          `Failed to ${isChecked ? "attend" : "leave"} the event`
+          `Failed to ${targetChecked ? "attend" : "leave"} the event`
         );
       }
 
-      localStorage.setItem(`attendance_${eventId}`, isChecked.toString());
+      setIsChecked(targetChecked);
+      localStorage.setItem(`attendance_${eventId}`, targetChecked.toString());
+      setAttendanceChanged((prevState) => !prevState);
 
-      if (isChecked) {
+      if (targetChecked) {
         showAlert("You are now attending this event.", "alert-success");
       } else {
         showAlert("You are no longer attending this event.", "alert-danger");
       }
     } catch (error) {
       console.error(
-        `Error ${isChecked ? "attending" : "leaving"} event:`,
+        `Error ${targetChecked ? "attending" : "leaving"} event:`,
         error
       );
     }
